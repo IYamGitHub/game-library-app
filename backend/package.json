@@ -1,0 +1,22 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IYamGitHub/game-library-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IYamGitHub/game-library-app/issues"
+  },
+  "homepage": "https://github.com/IYamGitHub/game-library-app#readme",
+  "dependencies": {
+    "twisted": "^1.60.0"
+  }
+}
