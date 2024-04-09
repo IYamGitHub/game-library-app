@@ -1,3 +1,8 @@
+:root {
+  --gla-medium-blue: #1E2141;
+  --gla-light-blue: #606EA2;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,9 +10,47 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #1E2141;
+  height: 100%;
+  color: white;
+}
+
+html {
+  height: 100%;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.bg-gla-medium-blue {
+  background-color: var(--gla-medium-blue);
+}
+
+.header-section-logged-out {
+  background-color: black;
+  width: 100%;
+  height: 100px;
+  position: fixed;
+  z-index: 100;
+}
+
+.header-section-in-app {
+  background-color: var(--gla-light-blue);
+  width: 100%;
+  height: 100px;
+  position: fixed;
+  z-index: 100;
+}
+
+.content {
+  padding: 4rem 6rem;
+  padding-top: calc(100px + 4rem);
+  width: 100%;
+  height: 100%;
+}
+
+#root {
+  height: 100%;
 }

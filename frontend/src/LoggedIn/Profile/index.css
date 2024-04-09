@@ -1,0 +1,48 @@
+.avatar {
+  height: 125px;
+  width: 125px;
+  padding: 0.25rem;
+  position: relative;
+  cursor: pointer;
+
+  .edit-icon {
+    position: absolute;
+    height: 45px;
+    bottom: 5px;
+    right: -10px;
+    width: 45px;
+    transform: rotate(-7deg);
+    color: lightgray;
+    z-index: 2;
+  }
+
+  .edit-overlay {
+    display: none;
+    position: absolute;
+    height: 125px;
+    width: 125px;
+    padding: 0.25rem;
+    background-color: rgba(0, 0, 0);
+    opacity: 0.6;
+    border-radius: 100px;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &.selected {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 25px;
+  }
+}
+
+.avatar:hover {
+  .edit-icon {
+    color: rgba(255, 255, 255, 0.5);
+  }
+  .edit-overlay {
+    display: flex;
+  }
+}
