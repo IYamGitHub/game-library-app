@@ -73,13 +73,23 @@ const AvatarModal = ({
 };
 
 const Profile = () => {
-  const [showModal, setShowModal] = useState<boolean>(true);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [editBio, setEditBio] = useState<boolean>(false);
+  const [bio, setBio] = useState<string>("IYamSushi has not set a bio yet.");
+
+  const saveBioHandle = () => {
+    setEditBio(false);
+    // TODO: handle sending new bio to database
+  };
 
   return (
     <>
       <AvatarModal showModal={showModal} setShowModal={setShowModal} />
       <div>
-        <div id="profile-header" className="d-flex align-items-center">
+        <div
+          id="profile-header"
+          className="d-flex align-items-center profile-header"
+        >
           <div className="avatar rounded-circle">
             <img
               src={`/avatars/${AVATARS[0]}`}
@@ -97,8 +107,31 @@ const Profile = () => {
           </div>
         </div>
         <div className="mt-5">
-          <h1>Bio</h1>
-          <p>IYamSushi has not set a bio yet. </p>
+          <div className="d-flex w-100 justify-content-between">
+            <h1>Bio</h1>
+            {!editBio && (
+              <BiSolidPencil
+                className="edit-icon ms-3"
+                onClick={() => setEditBio(true)}
+              />
+            )}
+          </div>
+          <hr className="mt-0" />
+          {editBio ? (
+            <div className="d-flex flex-column justify-content-end">
+              <textarea
+                className="form-control"
+                rows={7}
+                value={bio}
+                onChange={(e) => setBio(e.target.value)}
+              ></textarea>
+              <button onClick={saveBioHandle} className="btn btn-light mt-3 ms-auto px-5">
+                Save
+              </button>
+            </div>
+          ) : (
+            <p>{bio}</p>
+          )}
         </div>
       </div>
     </>

@@ -7,12 +7,8 @@
 
   .edit-icon {
     position: absolute;
-    height: 45px;
     bottom: 5px;
     right: -10px;
-    width: 45px;
-    transform: rotate(-7deg);
-    color: lightgray;
     z-index: 2;
   }
 
@@ -45,4 +41,21 @@
   .edit-overlay {
     display: flex;
   }
+}
+
+.edit-icon {
+  height: 45px;
+  width: 45px;
+  transform: rotate(-7deg);
+  color: lightgray;
+  cursor: pointer;
+  &:hover {
+    color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+.profile-header {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  padding: 1rem 2rem;
 }

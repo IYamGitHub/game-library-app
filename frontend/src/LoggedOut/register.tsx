@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaEye, FaEyeSlash, FaExclamationTriangle } from "react-icons/fa";
 import "./index.css";
 import { Link } from "react-router-dom";
+import Nav from "../Nav/nav";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -17,7 +18,7 @@ const Register = () => {
     if (!username) {
       setUserAlert("Username field cannot be empty.");
     } else if (!password) {
-      console.log("no pass")
+      console.log("no pass");
       setPassAlert("Please enter a password.");
     } else if (!cPassword) {
       setPassAlert("Please confirm password.");
@@ -33,10 +34,8 @@ const Register = () => {
   };
 
   return (
-    <>
-      <div className="header-section-logged-out d-flex">
-        <h2 className="align-content-center ms-4">NAME</h2>
-      </div>
+    <div className="h-100 bg-gla-medium-blue">
+      <Nav showNav={false} />
       <div className="content d-flex bg-login register-bg-image">
         <div className="login-section d-flex flex-column flex-grow-1 opacity-100">
           <h1 className="text-center mb-4">Sign up today!</h1>
@@ -62,10 +61,7 @@ const Register = () => {
             </div>
           )}
 
-          <label
-            htmlFor="password-input"
-            className="form-label mt-3"
-          >
+          <label htmlFor="password-input" className="form-label mt-3">
             Password
           </label>
           <div className="password-form">
@@ -87,10 +83,7 @@ const Register = () => {
               />
             )}
           </div>
-          <label
-            htmlFor="confirm-password-input"
-            className="form-label mt-3"
-          >
+          <label htmlFor="confirm-password-input" className="form-label mt-3">
             Confirm Password
           </label>
           <div className="password-form">
@@ -136,7 +129,7 @@ const Register = () => {
           </span>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

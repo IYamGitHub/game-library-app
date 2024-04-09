@@ -1,6 +1,9 @@
 :root {
   --gla-medium-blue: #1E2141;
-  --gla-light-blue: #606EA2;
+  --gla-grey-blue: #4D5B7B;
+  --gla-light-blue: #64709A;
+  --gla-dark-grey-blue: #263854;
+  --gla-blue: #34495c;
 }
 
 body {
@@ -10,7 +13,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #1E2141;
+  /* background-color: #1E2141; */
   height: 100%;
   color: white;
 }
@@ -28,16 +31,12 @@ code {
   background-color: var(--gla-medium-blue);
 }
 
-.header-section-logged-out {
-  background-color: black;
-  width: 100%;
-  height: 100px;
-  position: fixed;
-  z-index: 100;
+.bg-content {
+  background-color: var(--gla-blue);
 }
 
-.header-section-in-app {
-  background-color: var(--gla-light-blue);
+.header-section {
+  background-color: black;
   width: 100%;
   height: 100px;
   position: fixed;

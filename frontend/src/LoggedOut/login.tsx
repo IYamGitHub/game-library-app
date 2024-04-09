@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./index.css";
 import { Link } from "react-router-dom";
+import Nav from "../Nav/nav";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -17,10 +18,8 @@ const Login = () => {
   }
 
   return (
-    <>
-      <div className="header-section-logged-out d-flex">
-        <h2 className="align-content-center ms-4">NAME</h2>
-      </div>
+    <div className="h-100 bg-gla-medium-blue">
+      <Nav showNav={false} />
       <div className="content d-flex bg-login login-bg-image">
         <div className="login-section d-flex flex-column flex-grow-1 opacity-100">
           <h1 className="text-center mb-4">Sign in</h1>
@@ -63,7 +62,7 @@ const Login = () => {
           <span className="text-white mt-5 text-center">Don't have an account? <Link to="/register" className="text-white fw-bolder">Sign up</Link></span>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
