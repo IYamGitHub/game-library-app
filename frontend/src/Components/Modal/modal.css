@@ -1,5 +1,4 @@
 .modal {
-  /* position: fixed; */
   top: 0;
   left: 0;
   width: 100%;
@@ -9,7 +8,7 @@
 
 .modal-main {
   position: relative;
-  background: var(--gla-medium-blue);
+  background: var(--gla-blue);
   width: 80%;
   max-width: 1000px;
   max-height: 80%;

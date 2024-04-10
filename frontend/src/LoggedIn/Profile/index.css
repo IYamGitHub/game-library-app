@@ -4,6 +4,7 @@
   padding: 0.25rem;
   position: relative;
   cursor: pointer;
+  border-radius: 100px;
 
   .edit-icon {
     position: absolute;
@@ -27,11 +28,11 @@
     justify-content: center;
     align-items: center;
   }
+}
 
-  &.selected {
-    background-color: rgba(255, 255, 255, 0.3);
-    border-radius: 25px;
-  }
+.selected {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 25px;
 }
 
 .avatar:hover {
@@ -58,4 +59,10 @@
   background-color: rgba(255, 255, 255, 0.3);
   border-radius: 20px;
   padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+
+  @media (max-width: 576px) {
+    flex-direction: column;
+  }
 }

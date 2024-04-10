@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./index.css";
 import { Link } from "react-router-dom";
-import Nav from "../Nav/nav";
+import Nav from "../Components/Nav/nav";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);

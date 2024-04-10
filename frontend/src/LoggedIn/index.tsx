@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Profile from "./Profile";
-import Nav from "../Nav/nav";
+import Nav from "../Components/Nav/nav";
 
 const LoggedIn = () => {
   return (

@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import "./index.css";
-import { BiSolidPencil } from "react-icons/bi";
-import Modal from "../../Modal/modal";
+import React, { useState } from 'react';
+import './index.css';
+import { BiSolidPencil } from 'react-icons/bi';
+import Modal from '../../Components/Modal/modal';
 
 const AVATARS = require
-  .context("/public/avatars", true)
+  .context('/public/avatars', true)
   .keys()
   .map((path) => path.substring(2));
 
@@ -23,15 +23,16 @@ type AvatarModalProps = {
 const AvatarModal = ({
   onSubmit,
   showModal,
-  setShowModal,
+  setShowModal
 }: AvatarModalProps) => {
-  const [selectedAvatar, setSelectedAvatar] = useState<string>("");
+  const [selectedAvatar, setSelectedAvatar] = useState<string>('');
 
   const toggleModal = () => {
     setShowModal(!showModal);
   };
 
   const submitAvatar = () => {
+    //TODO: handle the passed in onSubmit here and pass one in below
     if (selectedAvatar) {
       setShowModal(false);
     }
@@ -52,14 +53,14 @@ const AvatarModal = ({
       }
     >
       <div className="d-flex flex-column">
-        <div>
+        <div className="flex-row d-flex flex-wrap">
           {AVATARS.map((avatar) => {
             return (
               <img
                 key={avatar}
                 src={`/avatars/${avatar}`}
                 className={`avatar ${
-                  avatar === selectedAvatar ? "selected" : ""
+                  avatar === selectedAvatar ? 'selected' : ''
                 }`}
                 alt="Avatar"
                 onClick={() => setSelectedAvatar(avatar)}
@@ -75,21 +76,25 @@ const AvatarModal = ({
 const Profile = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [editBio, setEditBio] = useState<boolean>(false);
-  const [bio, setBio] = useState<string>("IYamSushi has not set a bio yet.");
+  const [bio, setBio] = useState<string>('IYamSushi has not set a bio yet.');
+  const [editBioText, setEditBioText] = useState<string>(bio);
 
-  const saveBioHandle = () => {
+  const saveBioEdit = () => {
     setEditBio(false);
+    setBio(editBioText);
     // TODO: handle sending new bio to database
+  };
+
+  const cancelBioEdit = () => {
+    setEditBio(false);
+    setEditBioText(bio);
   };
 
   return (
     <>
       <AvatarModal showModal={showModal} setShowModal={setShowModal} />
       <div>
-        <div
-          id="profile-header"
-          className="d-flex align-items-center profile-header"
-        >
+        <div className="profile-header">
           <div className="avatar rounded-circle">
             <img
               src={`/avatars/${AVATARS[0]}`}
@@ -101,7 +106,7 @@ const Profile = () => {
               <h3>Edit</h3>
             </div>
           </div>
-          <div className="ms-5">
+          <div className="text-center text-sm-start ms-sm-5">
             <h1>IYamSushi</h1>
             <h6 className="text-decoration-underline">100 followers</h6>
           </div>
@@ -122,12 +127,23 @@ const Profile = () => {
               <textarea
                 className="form-control"
                 rows={7}
-                value={bio}
-                onChange={(e) => setBio(e.target.value)}
+                value={editBioText}
+                onChange={(e) => setEditBioText(e.target.value)}
               ></textarea>
-              <button onClick={saveBioHandle} className="btn btn-light mt-3 ms-auto px-5">
-                Save
-              </button>
+              <div className="ms-auto">
+                <button
+                  onClick={cancelBioEdit}
+                  className="btn btn-secondary mt-3 ms-auto px-5"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={saveBioEdit}
+                  className="btn btn-light mt-3 ms-2 px-5"
+                >
+                  Save
+                </button>
+              </div>
             </div>
           ) : (
             <p>{bio}</p>
