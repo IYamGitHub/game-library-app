@@ -51,7 +51,7 @@ const Nav = ({ showNav = true }: NavProps) => {
             <div className="d-flex gap-5 align-items-center">
               <Link
                 to="/gla/profile/hi"
-                className={`fs-3 nav-link ${
+                className={`fs-3 gla-nav-link ${
                   pathname.includes('profile') ? 'active' : ''
                 }`}
               >
@@ -59,7 +59,7 @@ const Nav = ({ showNav = true }: NavProps) => {
               </Link>
               <Link
                 to="/gla/games/hi"
-                className={`fs-3 nav-link ${
+                className={`fs-3 gla-nav-link ${
                   pathname.includes('games') ? 'active' : ''
                 }`}
               >

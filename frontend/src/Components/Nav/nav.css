@@ -21,8 +21,18 @@
   right: 0;
 }
 
-.nav-link.active {
-  color: var(--gla-grey-blue)
+.gla-nav-link{
+  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
+  text-decoration: none;
+  color: white;
+
+  &.active {
+    color: var(--gla-grey-blue)
+  }
+}
+
+.gla-nav-link:hover {
+  color: var(--gla-dark-grey-blue);
 }
 
 .nav-slideout {
