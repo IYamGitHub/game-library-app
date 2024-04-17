@@ -3,7 +3,7 @@ import { CgMenu } from 'react-icons/cg';
 import { VscChromeClose } from 'react-icons/vsc';
 import { Link, useLocation } from 'react-router-dom';
 import ComponentClickOutside from '../ClickOutsideComponent/click-outside-component';
-import { NavProps } from './nav';
+import { NAVTABS, NavProps } from './nav';
 import { IoExitOutline } from 'react-icons/io5';
 
 interface NavMobileSubpartsProps extends NavProps {
@@ -59,20 +59,16 @@ const NavMobileSlideout = ({
           </div>
         </ComponentClickOutside>
         <div className="d-flex flex-column fs-5 mt-5">
-          <Link
-            to="/gla/profile/hi"
-            className={`nav-link ${
-              pathname.includes('profile') ? 'active' : ''
-            }`}
-          >
-            Profile
-          </Link>
-          <Link
-            to="/gla/games/hi"
-            className={`nav-link ${pathname.includes('games') ? 'active' : ''}`}
-          >
-            My Games
-          </Link>
+          {NAVTABS.map((tab) => (
+            <Link
+              to={`/gla/${tab.link}${tab.linkParams}`}
+              className={`nav-link ${
+                pathname.includes(tab.link) ? 'active' : ''
+              }`}
+            >
+              {tab.text}
+            </Link>
+          ))}
         </div>
       </div>
       <div className="fs-6 mb-4">

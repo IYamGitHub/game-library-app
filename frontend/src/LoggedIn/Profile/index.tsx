@@ -148,6 +148,12 @@ const Profile = () => {
           ) : (
             <p>{bio}</p>
           )}
+          <div className='card'>
+            <img src="background.jpg" className="card-img-top" alt="..."/>
+            <div className="card-body">
+              <p className="card-text">Game Name</p>
+            </div>
+          </div>
         </div>
       </div>
     </>

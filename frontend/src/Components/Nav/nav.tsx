@@ -5,6 +5,17 @@ import { useState } from 'react';
 import ComponentClickOutside from '../ClickOutsideComponent/click-outside-component';
 import NavMobile from './nav-mobile';
 
+type NavTab = {
+  text: string;
+  link: string;
+  linkParams: string;
+};
+
+export const NAVTABS: NavTab[] = [
+  { text: 'Profile', link: 'profile', linkParams: '/hi' },
+  { text: 'My Games', link: 'games', linkParams: '/hi' }
+];
+
 export interface NavProps {
   showNav: boolean;
 }
@@ -48,23 +59,17 @@ const Nav = ({ showNav = true }: NavProps) => {
         <div className="d-flex gap-5">
           <h2 className="align-content-center m-0">NAME</h2>
           {showNav && (
-            <div className="d-flex gap-5 align-items-center">
-              <Link
-                to="/gla/profile/hi"
-                className={`fs-3 gla-nav-link ${
-                  pathname.includes('profile') ? 'active' : ''
-                }`}
-              >
-                Profile
-              </Link>
-              <Link
-                to="/gla/games/hi"
-                className={`fs-3 gla-nav-link ${
-                  pathname.includes('games') ? 'active' : ''
-                }`}
-              >
-                My Games
-              </Link>
+            <div className="d-flex gap-5 align-items-center fs-3">
+              {NAVTABS.map((tab) => (
+                <Link
+                  to={`/gla/${tab.link}${tab.linkParams}`}
+                  className={`nav-link ${
+                    pathname.includes(tab.link) ? 'active' : ''
+                  }`}
+                >
+                  {tab.text}
+                </Link>
+              ))}
             </div>
           )}
         </div>

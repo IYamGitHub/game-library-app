@@ -10,22 +10,21 @@ const Register = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [cPassword, setCPassword] = useState<string>("");
-  const [userAlert, setUserAlert] = useState<string>("");
-  const [passAlert, setPassAlert] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
   const submitHandler = () => {
     //check that username and password fields are not empty
     if (!username) {
-      setUserAlert("Username field cannot be empty.");
+      setError("Username field cannot be empty.");
     } else if (!password) {
       console.log("no pass");
-      setPassAlert("Please enter a password.");
+      setError("Please enter a password.");
     } else if (!cPassword) {
-      setPassAlert("Please confirm password.");
+      setError("Please confirm password.");
     } else if (password !== cPassword) {
-      setPassAlert("Passwords are different. Please try again.");
+      setError("Passwords are different. Please try again.");
     } else {
-      setPassAlert("");
+      setError("");
     }
     // TODO
     // 1. check that username is not taken (handle in backend)
@@ -38,7 +37,16 @@ const Register = () => {
       <Nav showNav={false} />
       <div className="content d-flex bg-login register-bg-image">
         <div className="login-section d-flex flex-column flex-grow-1 opacity-100">
-          <h1 className="text-center mb-4">Sign up today!</h1>
+          <h1 className={`text-center ${error ? "mb-2" : "mb-4"}`}>Sign up today!</h1>
+          {error && (
+            <div
+              className="alert alert-danger d-flex align-items-center m-0 mb-2"
+              role="alert"
+            >
+              <FaExclamationTriangle className="me-2" />
+              {error}
+            </div>
+          )}
           <label htmlFor="username-input" className="form-label">
             Username
           </label>
@@ -48,19 +56,9 @@ const Register = () => {
             className="form-control"
             onChange={(e) => {
               setUsername(e.target.value);
-              setUserAlert("");
+              setError("");
             }}
           ></input>
-          {userAlert && (
-            <div
-              className="alert alert-danger d-flex align-items-center mt-1 mb-0"
-              role="alert"
-            >
-              <FaExclamationTriangle />
-              <div>{userAlert}</div>
-            </div>
-          )}
-
           <label htmlFor="password-input" className="form-label mt-3">
             Password
           </label>
@@ -105,15 +103,6 @@ const Register = () => {
               />
             )}
           </div>
-          {passAlert && (
-            <div
-              className="alert alert-danger d-flex align-items-center mt-1 mb-0"
-              role="alert"
-            >
-              <FaExclamationTriangle className="me-3" />
-              <div>{passAlert}</div>
-            </div>
-          )}
           <button
             className="btn btn-light ms-auto me-0 mt-4"
             onClick={() => submitHandler()}
