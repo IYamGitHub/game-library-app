@@ -1,0 +1,36 @@
+.password-form {
+  display: flex;
+  position: relative;
+
+  .eye-icon {
+    position: absolute;
+    right: 0;
+    margin-right: 0.5rem;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 1.4rem;
+    width: 1.4rem;
+    cursor: pointer;
+  }
+}
+
+.bg-login {
+  background-repeat: no-repeat;
+  opacity: 0.6;
+  background-size: cover;
+  background-image: url("../../public/background.jpg");
+}
+
+.login-section {
+  margin: auto auto;
+  max-width: 500px;
+  background-color: rgba(0, 0, 0, 0.7);
+  opacity: 0.6;
+  padding: 2.5rem;
+  border-radius: 20px;
+
+  @media (max-width: 535px) {
+    height: 100%;
+    border-radius: 0;
+  }
+}

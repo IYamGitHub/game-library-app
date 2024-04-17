@@ -1,0 +1,26 @@
+.gla-card {
+  width: 250px;
+  height: 250px;
+  border-radius: 20px;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, .6);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 3px 10px black;
+  color: white;
+  text-decoration: none;
+}
+
+.gla-card:hover {
+  background-color: rgba(0, 0, 0, .8);
+  box-shadow: 0px 3px 20px black;
+}
+
+.gla-card-image {
+  flex-grow: 1;
+  width: 100%;
+}
+
+.gla-card-body {
+  padding: 1.25rem;
+}

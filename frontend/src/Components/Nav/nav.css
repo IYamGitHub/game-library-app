@@ -1,0 +1,71 @@
+.header-avatar {
+  height: 80px;
+  width: 80px;
+}
+
+.user-section {
+  cursor: pointer;
+  position: relative;
+  padding: 0 1rem;
+}
+
+.options {
+  position: absolute;
+  box-shadow: 0px 2px 20px black;
+  background-color: black;
+  top: 100px;
+  width: 100%;
+  height: fit-content;
+  padding: 2rem;
+  padding-top: 1rem;
+  right: 0;
+}
+
+.gla-nav-link{
+  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
+  text-decoration: none;
+  color: white;
+
+  &.active {
+    color: var(--gla-grey-blue)
+  }
+}
+
+.gla-nav-link:hover {
+  color: var(--gla-dark-grey-blue);
+}
+
+.nav-slideout {
+  background-color: black;
+  gap: 1rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  width: 60vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: -160vw;
+  transition: left 1s;
+  box-shadow: none;
+  justify-content: space-between;
+  text-align: center;
+  z-index: 10;
+
+  &.show {
+    left: 0;
+    box-shadow: 0px 0px 40px black;
+  }
+}
+
+.nav-mobile {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  top: 0;
+  transition: top 1s;
+
+  &.hide {
+    top: -100px;
+  }
+}
