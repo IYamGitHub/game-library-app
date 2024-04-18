@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/IYamGitHub/game-library-app/issues"
   },
-  "homepage": "https://github.com/IYamGitHub/game-library-app#readme"
+  "homepage": "https://github.com/IYamGitHub/game-library-app#readme",
+  "dependencies": {
+    "shieldbow": "^2.3.1"
+  }
 }
