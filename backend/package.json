@@ -15,8 +15,5 @@
   "bugs": {
     "url": "https://github.com/IYamGitHub/game-library-app/issues"
   },
-  "homepage": "https://github.com/IYamGitHub/game-library-app#readme",
-  "dependencies": {
-    "twisted": "^1.60.0"
-  }
+  "homepage": "https://github.com/IYamGitHub/game-library-app#readme"
 }
