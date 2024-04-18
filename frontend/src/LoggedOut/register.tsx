@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { FaEye, FaEyeSlash, FaExclamationTriangle } from "react-icons/fa";
 import "./index.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Nav from "../Components/Nav/nav";
+import * as client from "../Users/client";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -12,7 +13,8 @@ const Register = () => {
   const [cPassword, setCPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
 
-  const submitHandler = () => {
+  const navigate = useNavigate();
+  const submitHandler = async () => {
     //check that username and password fields are not empty
     if (!username) {
       setError("Username field cannot be empty.");
@@ -30,6 +32,12 @@ const Register = () => {
     // 1. check that username is not taken (handle in backend)
     // 3. redirect using navigate from react-router-dom to dashboard/home
     // 4. POST new user to user database, assign username, password (encrypt?), pick a randomized picture
+    try {
+      await client.signup(username);
+      navigate("/gla/dashboard");
+    } catch (err: any) {
+      setError(err.response.data.message);
+    }
   };
 
   return (
