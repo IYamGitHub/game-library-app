@@ -1,6 +1,8 @@
 import axios from 'axios';
 export const BASE_API = process.env.REACT_APP_API_BASE;
 export const USERS_API = `${BASE_API}/api/users`;
+
+console.log(BASE_API)
 export interface User {
   _id: string;
   username: string;
@@ -11,6 +13,7 @@ export interface User {
   riotid: string;
   steamid: string;
   following: [];
+  likes: [],
 }
 
 const request = axios.create({

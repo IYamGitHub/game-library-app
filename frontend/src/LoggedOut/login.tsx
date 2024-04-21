@@ -1,22 +1,26 @@
 import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./index.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Nav from "../Components/Nav/nav";
+import * as client from "../Users/client";
+import { User } from "../Users/client";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [username, setUsername] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [credentials, setCredentials] = useState<User>({ _id: "",
+    username: "", password: "", displayname: "", avatar: "", bio: "",
+    riotid: "", steamid: "", following: [], likes: [],});
 
-  const submitHandler = () => {
-    // TODO
-    // 1. check that username is not taken (handle in backend)
-    // 2. check that password === cPassword (handle here)
-    // 3. redirect using navigate from react-router-dom to dashboard/home
-    // 4. POST new user to user database, assign username, password (encrypt?), pick a randomized picture 
-  }
-
+  const navigate = useNavigate();
+  const signin = async () => {
+    try {
+      await client.signin(credentials);
+      navigate("/gla/dashboard");
+    } catch (err) {
+        alert("Login credentials are invalid.");
+    }
+  };
   return (
     <div className="h-100 bg-gla-medium-blue">
       <Nav showNav={false} />
@@ -30,7 +34,7 @@ const Login = () => {
             id="username-input"
             type="text"
             className="form-control"
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
           ></input>
           <label
             htmlFor="password-input"
@@ -43,7 +47,7 @@ const Login = () => {
               id="password-input"
               type={showPassword ? "text" : "password"}
               className="form-control"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
             />
             {showPassword ? (
               <FaEyeSlash
@@ -57,7 +61,7 @@ const Login = () => {
               />
             )}
           </div>
-          <button className="btn btn-light ms-auto me-0 mt-4" onClick={submitHandler}>Submit</button>
+          <button className="btn btn-light ms-auto me-0 mt-4" onClick={signin}>Submit</button>
 
           <span className="text-white mt-5 text-center">Don't have an account? <Link to="/register" className="text-white fw-bolder">Sign up</Link></span>
         </div>

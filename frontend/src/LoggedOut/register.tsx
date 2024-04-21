@@ -8,38 +8,30 @@ import * as client from "../Users/client";
 const Register = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showCPassword, setShowCPassword] = useState<boolean>(false);
-  const [username, setUsername] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [cPassword, setCPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
+  const [user, setUser] = useState({ username: "", password: "" });
+  const [cPassword, setCPassword] = useState<string>("");
 
   const navigate = useNavigate();
-  const submitHandler = async () => {
-    //check that username and password fields are not empty
-    if (!username) {
-      setError("Username field cannot be empty.");
-    } else if (!password) {
-      console.log("no pass");
-      setError("Please enter a password.");
-    } else if (!cPassword) {
-      setError("Please confirm password.");
-    } else if (password !== cPassword) {
-      setError("Passwords are different. Please try again.");
-    } else {
-      setError("");
-    }
-    // TODO
-    // 1. check that username is not taken (handle in backend)
-    // 3. redirect using navigate from react-router-dom to dashboard/home
-    // 4. POST new user to user database, assign username, password (encrypt?), pick a randomized picture
+  const signup = async () => {
     try {
-      await client.signup(username);
+      // if (!user.username) {
+      //   setError("Username field cannot be empty.");
+      // } else if (!user.password) {
+      //   setError("Please enter a password.");
+      // } else if (!cPassword) {
+      //   setError("Please confirm password.");
+      // } else if (user.password !== cPassword) {
+      //   setError("Passwords are different. Please try again.");
+      // } else {
+      //   setError("")
+      // }
+      await client.signup(user);
       navigate("/gla/dashboard");
     } catch (err: any) {
       setError(err.response.data.message);
     }
   };
-
   return (
     <div className="h-100 bg-gla-medium-blue">
       <Nav showNav={false} />
@@ -62,10 +54,7 @@ const Register = () => {
             id="username-input"
             type="text"
             className="form-control"
-            onChange={(e) => {
-              setUsername(e.target.value);
-              setError("");
-            }}
+            onChange={(e) => setUser({...user, username: e.target.value })}
           ></input>
           <label htmlFor="password-input" className="form-label mt-3">
             Password
@@ -75,7 +64,7 @@ const Register = () => {
               id="password-input"
               type={showPassword ? "text" : "password"}
               className="form-control"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => setUser({...user, password: e.target.value })}
             />
             {showPassword ? (
               <FaEyeSlash
@@ -113,7 +102,7 @@ const Register = () => {
           </div>
           <button
             className="btn btn-light ms-auto me-0 mt-4"
-            onClick={() => submitHandler()}
+            onClick={signup}
           >
             Submit
           </button>
