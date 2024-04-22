@@ -46,7 +46,11 @@ const NavUserSection = ({ username }: { username: string }) => {
         <Avatar imageUrl={avatar} />
         {showOptions && (
           <div className="options fs-6">
-            <Link onClick={signout} to="/login" className="text-decoration-underline text-light">
+            <Link
+              onClick={signout}
+              to="/login"
+              className="text-decoration-underline text-light"
+            >
               Sign out
             </Link>
           </div>
@@ -57,8 +61,16 @@ const NavUserSection = ({ username }: { username: string }) => {
 };
 
 const Nav = ({ showNav = true }: NavProps) => {
+  const [username, setUsername] = useState<string>('');
   const { pathname } = useLocation();
-  const username = pathname.split('/').pop();
+
+  useEffect(() => {
+    async function getUsername() {
+      const username = (await client.profile()).username;
+      setUsername(username);
+    }
+    getUsername();
+  }, []);
 
   return (
     <>
