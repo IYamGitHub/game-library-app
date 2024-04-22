@@ -24,6 +24,8 @@ type Profile = {
   username: string;
   avatar: string;
   bio: string;
+  riotid: string;
+  steamid: string;
 };
 
 //TODO
@@ -85,10 +87,12 @@ const AvatarModal = ({
 
 const Profile = ({ onRefresh }: ProfileProps) => {
   const [showModal, setShowModal] = useState<boolean>(false);
+  const { username } = useParams();
   const [editBio, setEditBio] = useState<boolean>(false);
   const [bio, setBio] = useState<string>('IYamSushi has not set a bio yet.');
   const [editBioText, setEditBioText] = useState<string>(bio);
-  const { username } = useParams();
+  const [steamId, setSteamId] = useState<string>();
+  const [riotId, setRiotId] = useState<string>();
   const [profile, setProfile] = useState<Profile | null>(null);
 
   useEffect(() => {
@@ -96,7 +100,10 @@ const Profile = ({ onRefresh }: ProfileProps) => {
       if (username) {
         const profile = await client.findUserByUsername(username);
         setProfile(profile);
-        setBio(profile.bio || 'IYamSushi has not set a bio yet.');
+        console.log(profile)
+        setBio(profile.bio);
+        setSteamId(profile.steamid);
+        setRiotId(profile.riotid);
       }
     }
     getProfile();
@@ -111,6 +118,14 @@ const Profile = ({ onRefresh }: ProfileProps) => {
   const cancelBioEdit = () => {
     setEditBio(false);
     setEditBioText(bio);
+  };
+
+  const saveSteamId = async () => {
+    await client.updateUser({ ...profile, steamid: steamId });
+  };
+
+  const saveRiotId = async () => {
+    await client.updateUser({ ...profile, riotid: riotId});
   };
 
   const submitAvatar = async (newAvatar: string) => {
@@ -129,22 +144,52 @@ const Profile = ({ onRefresh }: ProfileProps) => {
         submitAvatar={submitAvatar}
       />
       <div>
-        <div className="profile-header">
-          <div className="avatar rounded-circle">
-            <img
-              src={`/avatars/${profile?.avatar}`}
-              className="h-100 image"
-              alt="Avatar"
-            />
-            <BiSolidPencil className="edit-icon" />
-            <div className="edit-overlay" onClick={() => setShowModal(true)}>
-              <h3>Edit</h3>
+        <div className="profile-header d-flex justify-content-between">
+          <div className="d-flex align-item-center">
+            <div className="avatar rounded-circle d-flex flex-column">
+              <img
+                src={`/avatars/${profile?.avatar}`}
+                className="h-100 image"
+                alt="Avatar"
+              />
+              <BiSolidPencil className="edit-icon" />
+              <div className="edit-overlay" onClick={() => setShowModal(true)}>
+                <h3>Edit</h3>
+              </div>
+            </div>
+            <div className="text-center text-sm-start ms-sm-5 d-flex flex-column">
+              <div className="d-flex flex-column">
+                <h1>{username}</h1>
+                <h6 className="text-decoration-underline">100 followers</h6>
+              </div>
             </div>
           </div>
-          <div className="text-center text-sm-start ms-sm-5">
-            <h1>{username}</h1>
-            <h6 className="text-decoration-underline">100 followers</h6>
-          </div>
+          <div className="d-flex flex-column">
+              <form onSubmit={saveSteamId}>
+                <label htmlFor="steamId" className="form-label">
+                  Steam ID
+                </label>
+                <input
+                  className="form-control"
+                  type="text"
+                  id="steamId"
+                  value={steamId}
+                  onChange={(e) => setSteamId(e.target.value)}>
+                </input>
+              </form>
+              <form onSubmit={saveRiotId}>
+                <label htmlFor="riotId" className="form-label">
+                  Summoner Name
+                </label>
+                <input
+                  className="form-control"
+                  type="text"
+                  id="riotId"
+                  value={riotId}
+                  onChange={(e) => setRiotId(e.target.value)}>
+                </input>
+              </form>
+            </div>
         </div>
         <div className="mt-5">
           <div className="d-flex w-100 justify-content-between">
