@@ -16,6 +16,10 @@ type AvatarModalProps = {
   setShowModal: (showModal: boolean) => void;
 };
 
+type ProfileProps = {
+  onRefresh: () => void;
+};
+
 type Profile = {
   username: string;
   avatar: string;
@@ -82,7 +86,7 @@ const AvatarModal = ({
   );
 };
 
-const Profile = () => {
+const Profile = ({ onRefresh }: ProfileProps) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [editBio, setEditBio] = useState<boolean>(false);
   const [bio, setBio] = useState<string>('IYamSushi has not set a bio yet.');
@@ -117,6 +121,7 @@ const Profile = () => {
     const updatedProfile =
       username && (await client.findUserByUsername(username));
     setProfile({ ...updatedProfile, avatar: newAvatar });
+    onRefresh();
   };
 
   return (
