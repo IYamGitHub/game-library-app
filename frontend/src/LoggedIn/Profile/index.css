@@ -8,8 +8,8 @@
 
   .edit-icon {
     position: absolute;
-    bottom: 5px;
-    right: -10px;
+    bottom: 10px;
+    right: 2px;
     z-index: 2;
   }
 
@@ -45,8 +45,8 @@
 }
 
 .edit-icon {
-  height: 45px;
-  width: 45px;
+  height: 35px;
+  width: 35px;
   transform: rotate(-7deg);
   color: lightgray;
   cursor: pointer;
@@ -62,7 +62,7 @@
   display: flex;
   align-items: center;
 
-  @media (max-width: 576px) {
+  @media (max-width: var(--mobile-screen)) {
     flex-direction: column;
   }
 }

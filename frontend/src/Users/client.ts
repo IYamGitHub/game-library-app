@@ -35,8 +35,13 @@ export const findAllUsers = async () => {
   return response.data;
 };
 
-export const findUserById = async (id: string) => {
-  const response = await request.get(`${USERS_API}/${id}`);
+// export const findUserById = async (id: string) => {
+//   const response = await request.get(`${USERS_API}/${id}`);
+//   return response.data;
+// };
+
+export const findUserByUsername = async (username: string) => {
+  const response = await request.get(`${USERS_API}/${username}`);
   return response.data;
 };
 

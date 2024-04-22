@@ -1,17 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './index.css';
 import { BiSolidPencil } from 'react-icons/bi';
 import Modal from '../../Components/Modal/modal';
+import { useParams } from 'react-router';
+import * as client from '../../Users/client';
 
-const AVATARS = require
+export const AVATARS = require
   .context('/public/avatars', true)
   .keys()
   .map((path) => path.substring(2));
 
 type AvatarModalProps = {
-  onSubmit?: () => void;
+  submitAvatar: (avatar: string) => void;
   showModal: boolean;
   setShowModal: (showModal: boolean) => void;
+};
+
+type Profile = {
+  username: string;
+  avatar: string;
+  bio: string;
 };
 
 //TODO
@@ -21,7 +29,7 @@ type AvatarModalProps = {
 //pick a better background color for the modal
 
 const AvatarModal = ({
-  onSubmit,
+  submitAvatar,
   showModal,
   setShowModal
 }: AvatarModalProps) => {
@@ -31,10 +39,11 @@ const AvatarModal = ({
     setShowModal(!showModal);
   };
 
-  const submitAvatar = () => {
+  const onSubmit = async () => {
     //TODO: handle the passed in onSubmit here and pass one in below
     if (selectedAvatar) {
       setShowModal(false);
+      submitAvatar(selectedAvatar);
     }
   };
 
@@ -46,7 +55,7 @@ const AvatarModal = ({
       footer={
         <button
           className="btn btn-light mt-4 select-button px-5 mx-auto"
-          onClick={() => submitAvatar()}
+          onClick={() => onSubmit()}
         >
           Select
         </button>
@@ -78,11 +87,24 @@ const Profile = () => {
   const [editBio, setEditBio] = useState<boolean>(false);
   const [bio, setBio] = useState<string>('IYamSushi has not set a bio yet.');
   const [editBioText, setEditBioText] = useState<string>(bio);
+  const { username } = useParams();
+  const [profile, setProfile] = useState<Profile | null>(null);
 
-  const saveBioEdit = () => {
+  useEffect(() => {
+    async function getProfile() {
+      if (username) {
+        const profile = await client.findUserByUsername(username);
+        setProfile(profile);
+        setBio(profile.bio || 'IYamSushi has not set a bio yet.');
+      }
+    }
+    getProfile();
+  }, [username]);
+
+  const saveBioEdit = async () => {
     setEditBio(false);
     setBio(editBioText);
-    // TODO: handle sending new bio to database
+    await client.updateUser({ ...profile, bio: editBioText });
   };
 
   const cancelBioEdit = () => {
@@ -90,14 +112,25 @@ const Profile = () => {
     setEditBioText(bio);
   };
 
+  const submitAvatar = async (newAvatar: string) => {
+    await client.updateUser({ ...profile, avatar: newAvatar });
+    const updatedProfile =
+      username && (await client.findUserByUsername(username));
+    setProfile({ ...updatedProfile, avatar: newAvatar });
+  };
+
   return (
     <>
-      <AvatarModal showModal={showModal} setShowModal={setShowModal} />
+      <AvatarModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        submitAvatar={submitAvatar}
+      />
       <div>
         <div className="profile-header">
           <div className="avatar rounded-circle">
             <img
-              src={`/avatars/${AVATARS[0]}`}
+              src={`/avatars/${profile?.avatar}`}
               className="h-100 image"
               alt="Avatar"
             />
@@ -107,7 +140,7 @@ const Profile = () => {
             </div>
           </div>
           <div className="text-center text-sm-start ms-sm-5">
-            <h1>IYamSushi</h1>
+            <h1>{username}</h1>
             <h6 className="text-decoration-underline">100 followers</h6>
           </div>
         </div>
