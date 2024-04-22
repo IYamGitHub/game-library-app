@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Summoner, Ranked, Mastery, getSummoner, getSoloQ, getFlexQ, getHighestMastery } from './leagueClient';
+import * as client from '../Users/client';
 
 const League = () => {
     const [summonerName, setSummonerName] = useState('');
@@ -7,6 +8,16 @@ const League = () => {
     const [soloQ, setSoloQ] = useState<Ranked | null>(null);
     const [flexQ, setFlexQ] = useState<Ranked | null>(null);
     const [mastery, setMastery] = useState<Mastery[] | null>(null);
+
+    useEffect(() => {
+        async function updateSteamPage() {
+            const profile = await client.profile();
+            const user = await client.findUserByUsername(profile.username);
+            setSummonerName(user.riotId);
+        }
+        updateSteamPage();
+        fetchData();
+    }, []);
 
     const fetchData = async () => {
         const summonerData = await getSummoner(summonerName);
