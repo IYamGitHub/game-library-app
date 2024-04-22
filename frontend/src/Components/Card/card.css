@@ -9,6 +9,8 @@
   box-shadow: 0px 3px 10px black;
   color: white;
   text-decoration: none;
+  position: relative;
+  z-index: 2;
 }
 
 .gla-card:hover {
@@ -17,10 +19,27 @@
 }
 
 .gla-card-image {
-  flex-grow: 1;
-  width: 100%;
+  flex-shrink: 1;
+  height: 186px;
+  object-fit: cover;
 }
 
 .gla-card-body {
   padding: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.card-text {
+  overflow: hidden;
+  flex-grow: 1;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.like-icon {
+  z-index: 50;
+  font-size: 24px;
+  cursor: pointer;
 }

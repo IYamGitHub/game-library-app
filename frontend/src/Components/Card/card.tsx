@@ -1,22 +1,29 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import "./card.css"
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import './card.css';
+import { GoHeart, GoHeartFill } from 'react-icons/go';
 
-interface Card {
-  link: string; //TODO: figure out where we should link this
-  image: string;
-  text: string;
+interface CardProps {
+  image?: string;
+  text?: string;
+  liked?: boolean;
 }
 
-const Card = () => {
+const Card = ({ image, text }: CardProps) => {
+  const [liked, setLiked] = useState<boolean>(false);
   return (
-    <Link className='gla-card' to="#">
-      <img src="background.jpg" className="gla-card-image" alt="..."/>
+    <Link className="gla-card" to="#">
+      <img src={image} className="gla-card-image" alt="..." />
       <div className="gla-card-body">
-        <p className="card-text">Game Name</p>
+        <p className="card-text m-0">{text}</p>
+        {liked ? (
+          <GoHeartFill className="like-icon" onClick={() => setLiked(!liked)} />
+        ) : (
+          <GoHeart className="like-icon" onClick={() => setLiked(!liked)} />
+        )}
       </div>
     </Link>
-  )
-}
+  );
+};
 
 export default Card;
