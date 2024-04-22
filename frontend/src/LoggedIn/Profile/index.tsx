@@ -100,7 +100,6 @@ const Profile = ({ onRefresh }: ProfileProps) => {
       if (username) {
         const profile = await client.findUserByUsername(username);
         setProfile(profile);
-        console.log(profile)
         setBio(profile.bio);
         setSteamId(profile.steamid);
         setRiotId(profile.riotid);
