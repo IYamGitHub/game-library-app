@@ -4,6 +4,7 @@ import { BiSolidPencil } from 'react-icons/bi';
 import Modal from '../../Components/Modal/modal';
 import { useParams } from 'react-router';
 import * as client from '../../Users/client';
+import CardRow from '../../Components/Card/cardRow';
 
 export const AVATARS = require
   .context('/public/avatars', true)
@@ -124,7 +125,7 @@ const Profile = ({ onRefresh }: ProfileProps) => {
   };
 
   const saveRiotId = async () => {
-    await client.updateUser({ ...profile, riotid: riotId});
+    await client.updateUser({ ...profile, riotid: riotId });
   };
 
   const submitAvatar = async (newAvatar: string) => {
@@ -164,31 +165,31 @@ const Profile = ({ onRefresh }: ProfileProps) => {
             </div>
           </div>
           <div className="d-flex flex-column">
-              <form onSubmit={saveSteamId}>
-                <label htmlFor="steamId" className="form-label">
-                  Steam ID
-                </label>
-                <input
-                  className="form-control"
-                  type="text"
-                  id="steamId"
-                  value={steamId}
-                  onChange={(e) => setSteamId(e.target.value)}>
-                </input>
-              </form>
-              <form onSubmit={saveRiotId}>
-                <label htmlFor="riotId" className="form-label">
-                  Summoner Name
-                </label>
-                <input
-                  className="form-control"
-                  type="text"
-                  id="riotId"
-                  value={riotId}
-                  onChange={(e) => setRiotId(e.target.value)}>
-                </input>
-              </form>
-            </div>
+            <form onSubmit={saveSteamId}>
+              <label htmlFor="steamId" className="form-label">
+                Steam ID
+              </label>
+              <input
+                className="form-control"
+                type="text"
+                id="steamId"
+                value={steamId}
+                onChange={(e) => setSteamId(e.target.value)}
+              ></input>
+            </form>
+            <form onSubmit={saveRiotId}>
+              <label htmlFor="riotId" className="form-label">
+                Summoner Name
+              </label>
+              <input
+                className="form-control"
+                type="text"
+                id="riotId"
+                value={riotId}
+                onChange={(e) => setRiotId(e.target.value)}
+              ></input>
+            </form>
+          </div>
         </div>
         <div className="mt-5">
           <div className="d-flex w-100 justify-content-between">
@@ -229,6 +230,7 @@ const Profile = ({ onRefresh }: ProfileProps) => {
           )}
         </div>
       </div>
+      <CardRow />
     </>
   );
 };
