@@ -27,8 +27,6 @@ type Profile = {
 };
 
 //TODO
-//implement pulling a profile, put in set state so that updating the avatar will trigger rerender
-//handle submit
 //think about what else to add to this page bc it's a little lacking
 //pick a better background color for the modal
 
@@ -44,7 +42,6 @@ const AvatarModal = ({
   };
 
   const onSubmit = async () => {
-    //TODO: handle the passed in onSubmit here and pass one in below
     if (selectedAvatar) {
       setShowModal(false);
       submitAvatar(selectedAvatar);

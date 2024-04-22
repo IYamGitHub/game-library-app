@@ -30,7 +30,7 @@ const Register = () => {
         setError("Passwords are different. Please try again.");
       } else {
         await client.signup(user);
-        navigate(`/gla/dashboard/${user.username}`);
+        navigate(`/gla/profile/${user.username}`);
       }
     } catch (err: any) {
       setError(err.response.data.message);

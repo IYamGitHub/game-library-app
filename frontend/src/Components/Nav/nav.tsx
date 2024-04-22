@@ -1,11 +1,9 @@
-import { Link, useLocation } from 'react-router-dom';
 import './nav.css';
 import React, { useEffect, useState } from 'react';
-
+import { Link, useLocation } from 'react-router-dom';
 import ComponentClickOutside from '../ClickOutsideComponent/click-outside-component';
 import NavMobile from './nav-mobile';
 import Avatar from '../Avatar/avatar';
-
 import * as client from '../../Users/client';
 
 type NavTab = {
@@ -25,6 +23,9 @@ export interface NavProps {
 const NavUserSection = ({ username }: { username: string }) => {
   const [showOptions, setShowOptions] = useState<boolean>(false);
   const [avatar, setAvatar] = useState<string>('');
+  const signout = async () => {
+    await client.signout();
+  };
 
   useEffect(() => {
     async function getProfile() {
@@ -44,7 +45,7 @@ const NavUserSection = ({ username }: { username: string }) => {
         <Avatar imageUrl={avatar} />
         {showOptions && (
           <div className="options fs-6">
-            <Link to="/login" className="text-decoration-underline text-light">
+            <Link onClick={signout} to="/login" className="text-decoration-underline text-light">
               Sign out
             </Link>
           </div>
@@ -57,8 +58,6 @@ const NavUserSection = ({ username }: { username: string }) => {
 const Nav = ({ showNav = true }: NavProps) => {
   const { pathname } = useLocation();
   const username = pathname.split('/').pop();
-
-  //TODO: handle on click for sign out so that users cannot click back and be logged in
 
   return (
     <>

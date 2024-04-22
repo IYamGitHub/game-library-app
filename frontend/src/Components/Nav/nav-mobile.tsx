@@ -6,7 +6,7 @@ import ComponentClickOutside from '../ClickOutsideComponent/click-outside-compon
 import { NAVTABS, NavProps } from './nav';
 import { IoExitOutline } from 'react-icons/io5';
 import Avatar from '../Avatar/avatar';
-
+import * as client from '../../Users/client';
 interface NavMobileSubpartsProps extends NavProps {
   openNav: boolean;
   setOpenNav: (openNav: boolean) => void;
@@ -41,6 +41,9 @@ const NavMobileSlideout = ({
 }: NavMobileSubpartsProps) => {
   const { pathname } = useLocation();
   const username = pathname.split("/").pop();
+  const signout = async () => {
+    await client.signout();
+  };
 
   return (
     <div className={`nav-slideout ${openNav ? 'show' : ''}`}>
@@ -71,7 +74,7 @@ const NavMobileSlideout = ({
         </div>
       </div>
       <div className="fs-6 mb-4">
-        <Link to="/login" className="text-decoration-underline text-light">
+        <Link onClick={signout} to="/login" className="text-decoration-underline text-light">
           Sign out
           <IoExitOutline className="ms-2 fs-5" />
         </Link>
