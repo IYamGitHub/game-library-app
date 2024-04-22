@@ -89,7 +89,7 @@ const Profile = ({ onRefresh }: ProfileProps) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const { username } = useParams();
   const [editBio, setEditBio] = useState<boolean>(false);
-  const [bio, setBio] = useState<string>('IYamSushi has not set a bio yet.');
+  const [bio, setBio] = useState<string>('');
   const [editBioText, setEditBioText] = useState<string>(bio);
   const [steamId, setSteamId] = useState<string>();
   const [riotId, setRiotId] = useState<string>();
