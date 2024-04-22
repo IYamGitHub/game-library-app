@@ -9,13 +9,24 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+}
 
-  .test {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    display: block;
-    width: 100%;
-    margin: 0;
-  }
+.test {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
+  width: 100%;
+  margin: 0;
+}
+
+.add-icon {
+  cursor: pointer;
+}
+.add-icon:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.searchModal {
+  height: 400px;
 }

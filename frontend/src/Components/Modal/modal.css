@@ -39,4 +39,5 @@
 
 .modal-body {
   overflow-y: scroll;
+  width: 100%;
 }
