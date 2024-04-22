@@ -82,7 +82,7 @@ const FollowModal = ({
   );
 };
 
-const FollowPanel = () => {
+const FollowPanel = ({ refresh }: { refresh: boolean }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [following, setFollowing] = useState<any[]>([]);
 
@@ -93,7 +93,7 @@ const FollowPanel = () => {
       setFollowing(following);
     }
     getFollowing();
-  }, []);
+  }, [refresh]);
 
   return (
     <>

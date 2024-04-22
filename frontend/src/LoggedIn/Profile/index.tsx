@@ -1,109 +1,52 @@
 import React, { useEffect, useState } from 'react';
 import './index.css';
 import { BiSolidPencil } from 'react-icons/bi';
-import Modal from '../../Components/Modal/modal';
 import { useParams } from 'react-router';
 import * as client from '../../Users/client';
 import CardRow from '../../Components/Card/cardRow';
-
-export const AVATARS = require
-  .context('/public/avatars', true)
-  .keys()
-  .map((path) => path.substring(2));
-
-type AvatarModalProps = {
-  submitAvatar: (avatar: string) => void;
-  showModal: boolean;
-  setShowModal: (showModal: boolean) => void;
-};
+import GameIdForm from './gameIdForm';
+import AvatarModal from './avatarModal';
 
 type ProfileProps = {
   onRefresh: () => void;
 };
 
-type Profile = {
+type ProfileType = {
   username: string;
   avatar: string;
   bio: string;
   riotid: string;
   steamid: string;
+  following: string[];
 };
 
 //TODO
 //think about what else to add to this page bc it's a little lacking
 //pick a better background color for the modal
 
-const AvatarModal = ({
-  submitAvatar,
-  showModal,
-  setShowModal
-}: AvatarModalProps) => {
-  const [selectedAvatar, setSelectedAvatar] = useState<string>('');
-
-  const toggleModal = () => {
-    setShowModal(!showModal);
-  };
-
-  const onSubmit = async () => {
-    if (selectedAvatar) {
-      setShowModal(false);
-      submitAvatar(selectedAvatar);
-    }
-  };
-
-  return (
-    <Modal
-      title="Choose your new avatar!"
-      open={showModal}
-      onClose={toggleModal}
-      footer={
-        <button
-          className="btn btn-light mt-4 select-button px-5 mx-auto"
-          onClick={() => onSubmit()}
-        >
-          Select
-        </button>
-      }
-    >
-      <div className="d-flex flex-column">
-        <div className="flex-row d-flex flex-wrap">
-          {AVATARS.map((avatar) => {
-            return (
-              <img
-                key={avatar}
-                src={`/avatars/${avatar}`}
-                className={`avatar ${
-                  avatar === selectedAvatar ? 'selected' : ''
-                }`}
-                alt="Avatar"
-                onClick={() => setSelectedAvatar(avatar)}
-              />
-            );
-          })}
-        </div>
-      </div>
-    </Modal>
-  );
-};
-
 const Profile = ({ onRefresh }: ProfileProps) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const { username } = useParams();
+  const [myProfile, setMyProfile] = useState<boolean>(true);
   const [editBio, setEditBio] = useState<boolean>(false);
   const [bio, setBio] = useState<string>('');
   const [editBioText, setEditBioText] = useState<string>(bio);
   const [steamId, setSteamId] = useState<string>();
   const [riotId, setRiotId] = useState<string>();
-  const [profile, setProfile] = useState<Profile | null>(null);
+  const [profile, setProfile] = useState<ProfileType | null>(null);
+  const [currentUser, setCurrentUser] = useState<ProfileType | null>(null);
 
   useEffect(() => {
     async function getProfile() {
       if (username) {
-        const profile = await client.findUserByUsername(username);
-        setProfile(profile);
-        setBio(profile.bio);
-        setSteamId(profile.steamid);
-        setRiotId(profile.riotid);
+        const currentUser = await client.profile();
+        const viewingProfile = await client.findUserByUsername(username);
+        setProfile(viewingProfile);
+        setBio(viewingProfile.bio);
+        setSteamId(viewingProfile.steamid);
+        setRiotId(viewingProfile.riotid);
+        setCurrentUser(currentUser);
+        setMyProfile(currentUser?.username === viewingProfile?.username);
       }
     }
     getProfile();
@@ -136,6 +79,32 @@ const Profile = ({ onRefresh }: ProfileProps) => {
     onRefresh();
   };
 
+  const follow = async () => {
+    if (currentUser && profile) {
+      await client.follow(currentUser.username, profile.username).then(() => {
+        setCurrentUser({
+          ...currentUser,
+          following: [...currentUser?.following, profile.username]
+        });
+        onRefresh();
+      });
+    }
+  };
+
+  const unfollow = async () => {
+    if (currentUser && profile) {
+      await client.unfollow(currentUser.username, profile.username).then(() => {
+        setCurrentUser({
+          ...currentUser,
+          following: currentUser.following.filter(
+            (follow) => follow !== profile.username
+          )
+        });
+        onRefresh();
+      });
+    }
+  };
+
   return (
     <>
       <AvatarModal
@@ -145,17 +114,26 @@ const Profile = ({ onRefresh }: ProfileProps) => {
       />
       <div>
         <div className="profile-header d-flex justify-content-between">
-          <div className="d-flex align-item-center">
-            <div className="avatar rounded-circle d-flex flex-column">
+          <div className="d-flex align-items-center">
+            <div
+              className={`avatar rounded-circle d-flex flex-column ${myProfile && 'my-profile'}`}
+            >
               <img
                 src={`/avatars/${profile?.avatar}`}
                 className="h-100 image"
                 alt="Avatar"
               />
-              <BiSolidPencil className="edit-icon" />
-              <div className="edit-overlay" onClick={() => setShowModal(true)}>
-                <h3>Edit</h3>
-              </div>
+              {myProfile && (
+                <>
+                  <BiSolidPencil className="edit-icon" />
+                  <div
+                    className="edit-overlay"
+                    onClick={() => setShowModal(true)}
+                  >
+                    <h3>Edit</h3>
+                  </div>
+                </>
+              )}
             </div>
             <div className="text-center text-sm-start ms-sm-5 d-flex flex-column">
               <div className="d-flex flex-column">
@@ -164,37 +142,31 @@ const Profile = ({ onRefresh }: ProfileProps) => {
               </div>
             </div>
           </div>
-          <div className="d-flex flex-column">
-            <form onSubmit={saveSteamId}>
-              <label htmlFor="steamId" className="form-label">
-                Steam ID
-              </label>
-              <input
-                className="form-control"
-                type="text"
-                id="steamId"
-                value={steamId}
-                onChange={(e) => setSteamId(e.target.value)}
-              ></input>
-            </form>
-            <form onSubmit={saveRiotId}>
-              <label htmlFor="riotId" className="form-label">
-                Summoner Name
-              </label>
-              <input
-                className="form-control"
-                type="text"
-                id="riotId"
-                value={riotId}
-                onChange={(e) => setRiotId(e.target.value)}
-              ></input>
-            </form>
-          </div>
+          {myProfile ? (
+            <GameIdForm
+              steamId={steamId || ''}
+              riotId={riotId || ''}
+              setRiotId={setRiotId}
+              setSteamId={setSteamId}
+              saveSteamId={saveSteamId}
+              saveRiotId={saveRiotId}
+            />
+          ) : currentUser?.following.find(
+              (following) => following === profile?.username
+            ) ? (
+            <button className="btn btn-light px-4" onClick={unfollow}>
+              Unfollow
+            </button>
+          ) : (
+            <button className="btn btn-light px-4" onClick={follow}>
+              Follow
+            </button>
+          )}
         </div>
         <div className="mt-5">
           <div className="d-flex w-100 justify-content-between">
             <h1>Bio</h1>
-            {!editBio && (
+            {!editBio && myProfile && (
               <BiSolidPencil
                 className="edit-icon ms-3"
                 onClick={() => setEditBio(true)}
@@ -202,7 +174,7 @@ const Profile = ({ onRefresh }: ProfileProps) => {
             )}
           </div>
           <hr className="mt-0" />
-          {editBio ? (
+          {editBio && myProfile ? (
             <div className="d-flex flex-column justify-content-end">
               <textarea
                 className="form-control"

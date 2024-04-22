@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Profile from './Profile';
 import Nav from '../Components/Nav/nav';
-import FriendsList from './FollowersList/followerPanel';
-import "./index.css";
-import Dashboard from "../Dashboard/dashboard";
+import FollowersList from './FollowersList/followerPanel';
+import './index.css';
 
 const LoggedIn = () => {
   const [navRefresh, setNavRefresh] = useState(false);
@@ -13,8 +12,8 @@ const LoggedIn = () => {
   };
 
   return (
-    <div className='d-flex h-100'>
-      <div className='h-100 page'>
+    <div className="d-flex h-100">
+      <div className="h-100 page">
         <Nav showNav={true} />
         <div className="content bg-content">
           <Routes>
@@ -25,7 +24,7 @@ const LoggedIn = () => {
           </Routes>
         </div>
       </div>
-      <FriendsList />
+      <FollowersList refresh={navRefresh} />
     </div>
   );
 };

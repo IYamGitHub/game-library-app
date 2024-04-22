@@ -3,7 +3,6 @@
   width: 125px;
   padding: 0.25rem;
   position: relative;
-  cursor: pointer;
   border-radius: 100px;
 
   .edit-icon {
@@ -28,6 +27,10 @@
     justify-content: center;
     align-items: center;
   }
+
+  &.my-profile {
+    cursor: pointer;
+  }
 }
 
 .selected {
@@ -49,9 +52,11 @@
   width: 35px;
   transform: rotate(-7deg);
   color: lightgray;
-  cursor: pointer;
   &:hover {
     color: rgba(255, 255, 255, 0.5);
+  }
+  &.my-profile {
+    cursor: pointer;
   }
 }
 
