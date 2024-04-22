@@ -5,7 +5,6 @@ import * as client from '../../Users/client';
 import { IoPersonAdd } from 'react-icons/io5';
 import Modal from '../../Components/Modal/modal';
 import { useLocation } from 'react-router';
-
 interface Follower {
   username: string;
   avatar: string;
@@ -89,7 +88,8 @@ const FollowPanel = () => {
 
   useEffect(() => {
     async function getFollowing() {
-      const following = await client.findFollowers('hi');
+      const profile = await client.profile();
+      const following = await client.findFollowers(profile.username);
       setFollowing(following);
     }
     getFollowing();

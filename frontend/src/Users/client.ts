@@ -23,8 +23,13 @@ export const createUser = async (user: any) => {
   return response.data;
 };
 
+export const updateUser = async (user: any) => {
+  const response = await request.put(`${USERS_API}/${user.username}`, user);
+  return response.data;
+};
+
 export const deleteUser = async (user: any) => {
-  const response = await request.delete(`${USERS_API}/${user._id}`);
+  const response = await request.delete(`${USERS_API}/${user.username}`);
   return response.data;
 };
 
@@ -54,11 +59,6 @@ export const searchUsername = async (username: string, searchString: string) => 
   const response = await request.get(
     `${USERS_API}/search/${username}/${searchString}`
   );
-  return response.data;
-};
-
-export const updateUser = async (user: any) => {
-  const response = await request.put(`${USERS_API}/${user._id}`, user);
   return response.data;
 };
 

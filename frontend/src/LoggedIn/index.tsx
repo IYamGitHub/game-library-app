@@ -19,8 +19,8 @@ const LoggedIn = () => {
           <Routes>
             <Route path="/" element={<Navigate to="dashboard/:username" />} />
             <Route path="dashboard/:username" element={<h1>Dashboard</h1>} />
-            <Route path="profile/:username/*" element={<Profile onRefresh={refreshNav}/>} />
-            <Route path="games/:username/*" element={<h3>Games</h3>} />
+            <Route path="profile/:username" element={<Profile onRefresh={refreshNav}/>} />
+            <Route path="games/:username" element={<h3>Games</h3>} />
           </Routes>
         </div>
       </div>
