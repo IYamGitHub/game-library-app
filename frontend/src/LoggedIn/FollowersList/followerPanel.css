@@ -1,0 +1,32 @@
+.panel {
+  background-color: var(--gla-dark-grey-blue);
+  width: var(--panel-width);
+  height: 100%;
+  position: fixed;
+  right: 0;
+  z-index: 150;
+  padding: 2.4rem 2rem 4rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.test {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
+  width: 100%;
+  margin: 0;
+}
+
+.add-icon {
+  cursor: pointer;
+}
+.add-icon:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.searchModal {
+  height: 400px;
+}

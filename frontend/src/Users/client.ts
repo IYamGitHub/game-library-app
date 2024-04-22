@@ -1,8 +1,6 @@
 import axios from 'axios';
 export const BASE_API = process.env.REACT_APP_API_BASE;
 export const USERS_API = `${BASE_API}/api/users`;
-
-console.log(BASE_API)
 export interface User {
   _id: string;
   username: string;
@@ -35,8 +33,27 @@ export const findAllUsers = async () => {
   return response.data;
 };
 
-export const findUserById = async (id: string) => {
-  const response = await request.get(`${USERS_API}/${id}`);
+export const findUserByUsername = async (username: string) => {
+  const response = await request.get(`${USERS_API}/${username}`);
+  return response.data;
+};
+
+export const findFollowers = async (username: string) => {
+  const response = await request.get(`${USERS_API}/${username}/following`);
+  return response.data;
+};
+
+export const follow = async (username: string, followingUsername: string) => {
+  const response = await request.put(
+    `${USERS_API}/${username}/${followingUsername}`
+  );
+  return response.data;
+};
+
+export const searchUsername = async (username: string, searchString: string) => {
+  const response = await request.get(
+    `${USERS_API}/search/${username}/${searchString}`
+  );
   return response.data;
 };
 

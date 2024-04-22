@@ -1,27 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './index.css';
 import { BiSolidPencil } from 'react-icons/bi';
 import Modal from '../../Components/Modal/modal';
+import { useParams } from 'react-router';
+import * as client from '../../Users/client';
 
-const AVATARS = require
+export const AVATARS = require
   .context('/public/avatars', true)
   .keys()
   .map((path) => path.substring(2));
 
 type AvatarModalProps = {
-  onSubmit?: () => void;
+  submitAvatar: (avatar: string) => void;
   showModal: boolean;
   setShowModal: (showModal: boolean) => void;
 };
 
+type ProfileProps = {
+  onRefresh: () => void;
+};
+
+type Profile = {
+  username: string;
+  avatar: string;
+  bio: string;
+  riotid: string;
+  steamid: string;
+};
+
 //TODO
-//implement pulling a profile, put in set state so that updating the avatar will trigger rerender
-//handle submit
 //think about what else to add to this page bc it's a little lacking
 //pick a better background color for the modal
 
 const AvatarModal = ({
-  onSubmit,
+  submitAvatar,
   showModal,
   setShowModal
 }: AvatarModalProps) => {
@@ -31,10 +43,10 @@ const AvatarModal = ({
     setShowModal(!showModal);
   };
 
-  const submitAvatar = () => {
-    //TODO: handle the passed in onSubmit here and pass one in below
+  const onSubmit = async () => {
     if (selectedAvatar) {
       setShowModal(false);
+      submitAvatar(selectedAvatar);
     }
   };
 
@@ -46,7 +58,7 @@ const AvatarModal = ({
       footer={
         <button
           className="btn btn-light mt-4 select-button px-5 mx-auto"
-          onClick={() => submitAvatar()}
+          onClick={() => onSubmit()}
         >
           Select
         </button>
@@ -73,16 +85,34 @@ const AvatarModal = ({
   );
 };
 
-const Profile = () => {
+const Profile = ({ onRefresh }: ProfileProps) => {
   const [showModal, setShowModal] = useState<boolean>(false);
+  const { username } = useParams();
   const [editBio, setEditBio] = useState<boolean>(false);
-  const [bio, setBio] = useState<string>('IYamSushi has not set a bio yet.');
+  const [bio, setBio] = useState<string>('');
   const [editBioText, setEditBioText] = useState<string>(bio);
+  const [steamId, setSteamId] = useState<string>();
+  const [riotId, setRiotId] = useState<string>();
+  const [profile, setProfile] = useState<Profile | null>(null);
 
-  const saveBioEdit = () => {
+  useEffect(() => {
+    async function getProfile() {
+      if (username) {
+        const profile = await client.findUserByUsername(username);
+        setProfile(profile);
+        console.log(profile)
+        setBio(profile.bio);
+        setSteamId(profile.steamid);
+        setRiotId(profile.riotid);
+      }
+    }
+    getProfile();
+  }, [username]);
+
+  const saveBioEdit = async () => {
     setEditBio(false);
     setBio(editBioText);
-    // TODO: handle sending new bio to database
+    await client.updateUser({ ...profile, bio: editBioText });
   };
 
   const cancelBioEdit = () => {
@@ -90,26 +120,76 @@ const Profile = () => {
     setEditBioText(bio);
   };
 
+  const saveSteamId = async () => {
+    await client.updateUser({ ...profile, steamid: steamId });
+  };
+
+  const saveRiotId = async () => {
+    await client.updateUser({ ...profile, riotid: riotId});
+  };
+
+  const submitAvatar = async (newAvatar: string) => {
+    await client.updateUser({ ...profile, avatar: newAvatar });
+    const updatedProfile =
+      username && (await client.findUserByUsername(username));
+    setProfile({ ...updatedProfile, avatar: newAvatar });
+    onRefresh();
+  };
+
   return (
     <>
-      <AvatarModal showModal={showModal} setShowModal={setShowModal} />
+      <AvatarModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        submitAvatar={submitAvatar}
+      />
       <div>
-        <div className="profile-header">
-          <div className="avatar rounded-circle">
-            <img
-              src={`/avatars/${AVATARS[0]}`}
-              className="h-100 image"
-              alt="Avatar"
-            />
-            <BiSolidPencil className="edit-icon" />
-            <div className="edit-overlay" onClick={() => setShowModal(true)}>
-              <h3>Edit</h3>
+        <div className="profile-header d-flex justify-content-between">
+          <div className="d-flex align-item-center">
+            <div className="avatar rounded-circle d-flex flex-column">
+              <img
+                src={`/avatars/${profile?.avatar}`}
+                className="h-100 image"
+                alt="Avatar"
+              />
+              <BiSolidPencil className="edit-icon" />
+              <div className="edit-overlay" onClick={() => setShowModal(true)}>
+                <h3>Edit</h3>
+              </div>
+            </div>
+            <div className="text-center text-sm-start ms-sm-5 d-flex flex-column">
+              <div className="d-flex flex-column">
+                <h1>{username}</h1>
+                <h6 className="text-decoration-underline">100 followers</h6>
+              </div>
             </div>
           </div>
-          <div className="text-center text-sm-start ms-sm-5">
-            <h1>IYamSushi</h1>
-            <h6 className="text-decoration-underline">100 followers</h6>
-          </div>
+          <div className="d-flex flex-column">
+              <form onSubmit={saveSteamId}>
+                <label htmlFor="steamId" className="form-label">
+                  Steam ID
+                </label>
+                <input
+                  className="form-control"
+                  type="text"
+                  id="steamId"
+                  value={steamId}
+                  onChange={(e) => setSteamId(e.target.value)}>
+                </input>
+              </form>
+              <form onSubmit={saveRiotId}>
+                <label htmlFor="riotId" className="form-label">
+                  Summoner Name
+                </label>
+                <input
+                  className="form-control"
+                  type="text"
+                  id="riotId"
+                  value={riotId}
+                  onChange={(e) => setRiotId(e.target.value)}>
+                </input>
+              </form>
+            </div>
         </div>
         <div className="mt-5">
           <div className="d-flex w-100 justify-content-between">

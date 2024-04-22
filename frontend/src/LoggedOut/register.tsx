@@ -4,30 +4,34 @@ import "./index.css";
 import { Link, useNavigate } from "react-router-dom";
 import Nav from "../Components/Nav/nav";
 import * as client from "../Users/client";
+import { AVATARS } from "../LoggedIn/Profile";
+
+const getRandomElement = (arr: any[]) =>
+  arr.length ? arr[Math.floor(Math.random() * arr.length)] : undefined
+
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showCPassword, setShowCPassword] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
-  const [user, setUser] = useState({ username: "", password: "" });
+  const [user, setUser] = useState({ username: "", password: "", avatar: getRandomElement(AVATARS) });
   const [cPassword, setCPassword] = useState<string>("");
 
   const navigate = useNavigate();
   const signup = async () => {
     try {
-      // if (!user.username) {
-      //   setError("Username field cannot be empty.");
-      // } else if (!user.password) {
-      //   setError("Please enter a password.");
-      // } else if (!cPassword) {
-      //   setError("Please confirm password.");
-      // } else if (user.password !== cPassword) {
-      //   setError("Passwords are different. Please try again.");
-      // } else {
-      //   setError("")
-      // }
-      await client.signup(user);
-      navigate("/gla/dashboard");
+      if (!user.username) {
+        setError("Username field cannot be empty.");
+      } else if (!user.password) {
+        setError("Please enter a password.");
+      } else if (!cPassword) {
+        setError("Please confirm password.");
+      } else if (user.password !== cPassword) {
+        setError("Passwords are different. Please try again.");
+      } else {
+        await client.signup(user);
+        navigate(`/gla/profile/${user.username}`);
+      }
     } catch (err: any) {
       setError(err.response.data.message);
     }

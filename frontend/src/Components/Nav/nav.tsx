@@ -1,27 +1,39 @@
-import { Link, useLocation } from 'react-router-dom';
 import './nav.css';
-import { useState } from 'react';
-
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import ComponentClickOutside from '../ClickOutsideComponent/click-outside-component';
 import NavMobile from './nav-mobile';
+import Avatar from '../Avatar/avatar';
+import * as client from '../../Users/client';
 
 type NavTab = {
   text: string;
   link: string;
-  linkParams: string;
 };
 
 export const NAVTABS: NavTab[] = [
-  { text: 'Profile', link: 'profile', linkParams: '/hi' },
-  { text: 'My Games', link: 'games', linkParams: '/hi' }
+  { text: 'Profile', link: 'profile' },
+  { text: 'My Games', link: 'games' }
 ];
 
 export interface NavProps {
   showNav: boolean;
 }
 
-const NavUserSection = () => {
+const NavUserSection = ({ username }: { username: string }) => {
   const [showOptions, setShowOptions] = useState<boolean>(false);
+  const [avatar, setAvatar] = useState<string>('');
+  const signout = async () => {
+    await client.signout();
+  };
+
+  useEffect(() => {
+    async function getProfile() {
+      const profile = await client.findUserByUsername(username);
+      setAvatar(profile.avatar);
+    }
+    getProfile();
+  });
 
   return (
     <ComponentClickOutside conditional={showOptions} setState={setShowOptions}>
@@ -29,15 +41,11 @@ const NavUserSection = () => {
         className="d-flex gap-3 align-items-center user-section fs-3"
         onClick={() => setShowOptions(!showOptions)}
       >
-        <h3 className="m-0 d-none d-md-block">IYamSushi</h3>
-        <img
-          src={`/avatars/blob1-red.png`}
-          className="header-avatar"
-          alt="Avatar"
-        />
+        <h3 className="m-0 d-none d-md-block">{username}</h3>
+        <Avatar imageUrl={avatar} />
         {showOptions && (
           <div className="options fs-6">
-            <Link to="/login" className="text-decoration-underline text-light">
+            <Link onClick={signout} to="/login" className="text-decoration-underline text-light">
               Sign out
             </Link>
           </div>
@@ -49,20 +57,20 @@ const NavUserSection = () => {
 
 const Nav = ({ showNav = true }: NavProps) => {
   const { pathname } = useLocation();
-
-  //TODO: handle on click for sign out so that users cannot click back and be logged in
+  const username = pathname.split('/').pop();
 
   return (
     <>
       <NavMobile showNav={showNav} pathname={pathname} />
-      <div className="header-section d-none d-sm-flex justify-content-between px-4">
+      <div className="header-section d-none d-sm-flex justify-content-between">
         <div className="d-flex gap-5">
-          <h2 className="align-content-center m-0">NAME</h2>
+          <h2 className="align-content-center m-0">FLAMMIE</h2>
           {showNav && (
             <div className="d-flex gap-5 align-items-center fs-3">
-              {NAVTABS.map((tab) => (
+              {NAVTABS.map((tab, idx) => (
                 <Link
-                  to={`/gla/${tab.link}${tab.linkParams}`}
+                  key={idx}
+                  to={`/gla/${tab.link}/${username}`}
                   className={`nav-link ${
                     pathname.includes(tab.link) ? 'active' : ''
                   }`}
@@ -73,7 +81,7 @@ const Nav = ({ showNav = true }: NavProps) => {
             </div>
           )}
         </div>
-        {showNav && <NavUserSection />}
+        {showNav && username && <NavUserSection username={username} />}
       </div>
     </>
   );

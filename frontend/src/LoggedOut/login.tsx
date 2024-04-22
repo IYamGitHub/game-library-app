@@ -16,7 +16,7 @@ const Login = () => {
   const signin = async () => {
     try {
       await client.signin(credentials);
-      navigate("/gla/dashboard");
+      navigate(`/gla/profile/${credentials.username}`);
     } catch (err) {
         alert("Login credentials are invalid.");
     }

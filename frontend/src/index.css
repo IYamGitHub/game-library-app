@@ -2,8 +2,13 @@
   --gla-medium-blue: #1E2141;
   --gla-grey-blue: #4D5B7B;
   --gla-light-blue: #64709A;
-  --gla-dark-grey-blue: #263854;
-  --gla-blue: #34495c;
+  --gla-dark-grey-blue: #283240;
+  --gla-blue: #405B6F;
+  --gla-dark-blue: #1d2f46;
+
+  --panel-width: 275px;
+
+  --mobile-screen: 768px;
 }
 
 body {
@@ -13,7 +18,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* background-color: #1E2141; */
   height: 100%;
   color: white;
 }
@@ -41,6 +45,12 @@ code {
   height: 100px;
   position: fixed;
   z-index: 100;
+  padding: 1rem;
+  padding-right: calc(var(--panel-width) + 1rem);
+
+  @media (max-width: var(--mobile-screen)) {
+    padding-right: 1rem;
+  }
 }
 
 .content {
@@ -49,7 +59,7 @@ code {
   width: 100%;
   height: 100%;
 
-  @media (max-width: 576px) {
+  @media (max-width: var(--mobile-screen)) {
     padding: 2rem;
     padding-top: calc(100px + 2rem);
   }
