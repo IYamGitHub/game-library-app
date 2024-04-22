@@ -64,7 +64,7 @@ const Nav = ({ showNav = true }: NavProps) => {
       <NavMobile showNav={showNav} pathname={pathname} />
       <div className="header-section d-none d-sm-flex justify-content-between">
         <div className="d-flex gap-5">
-          <h2 className="align-content-center m-0">NAME</h2>
+          <h2 className="align-content-center m-0">FLAMMIE</h2>
           {showNav && (
             <div className="d-flex gap-5 align-items-center fs-3">
               {NAVTABS.map((tab, idx) => (
