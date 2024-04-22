@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Profile from './Profile';
 import Nav from '../Components/Nav/nav';
-import FriendsList from './FriendsList/followerPanel';
+import FriendsList from './FollowersList/followerPanel';
 import "./index.css";
 
 const LoggedIn = () => {
