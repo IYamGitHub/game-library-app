@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Summoner, Ranked, Mastery, getSummoner, getSoloQ, getFlexQ, getHighestMastery } from './leagueClient';
 import * as client from '../Users/client';
+import './games.css';
 
 const League = () => {
     const [summonerName, setSummonerName] = useState('');
@@ -10,39 +11,46 @@ const League = () => {
     const [mastery, setMastery] = useState<Mastery[] | null>(null);
 
     useEffect(() => {
-        async function updateSteamPage() {
+        async function updateLeaguePage() {
             const profile = await client.profile();
             const user = await client.findUserByUsername(profile.username);
-            setSummonerName(user.riotId);
+            setSummonerName(user.riotid);
         }
-        updateSteamPage();
-        fetchData();
+        updateLeaguePage();
     }, []);
 
-    const fetchData = async () => {
-        const summonerData = await getSummoner(summonerName);
-        const soloQData = await getSoloQ(summonerName);
-        const flexQData = await getFlexQ(summonerName);
-        const masteryData = await getHighestMastery(summonerName);
+    useEffect(() => {
+        const fetchData = async () => {
+            const summonerData = await getSummoner(summonerName);
+            const soloQData = await getSoloQ(summonerName);
+            const flexQData = await getFlexQ(summonerName);
+            const masteryData = await getHighestMastery(summonerName);
 
-        setSummonerInfo(summonerData);
-        setSoloQ(soloQData);
-        setFlexQ(flexQData);
-        setMastery(masteryData);
-    };
+            setSummonerInfo(summonerData);
+            setSoloQ(soloQData);
+            setFlexQ(flexQData);
+            setMastery(masteryData);
+        };
+
+        if (summonerName) {
+            fetchData();
+        }
+    }, [summonerName]);
 
     return (
-        <div>
-            <input
-                type="text"
-                value={summonerName}
-                onChange={(e) => setSummonerName(e.target.value)}
-                placeholder="Enter Summoner Name"
-            />
-            <button onClick={fetchData}>Fetch Data</button>
+        <div className="LeagueContainer">
+
+            {summonerInfo && (
+                <div className="LeagueSection">
+                    <h2>Summoner Info</h2>
+                    <p>Name: {summonerInfo.summonerName}</p>
+                    <p>Level: {summonerInfo.summonerLevel}</p>
+                    <img src={summonerInfo.summonerIcon} />
+                </div>
+            )}
 
             {mastery && (
-                <div>
+                <div className="LeagueSection">
                     <h2>Champion Mastery</h2>
                     {mastery.map((mastery, index) => (
                         <div key={index}>
@@ -54,17 +62,8 @@ const League = () => {
                 </div>
             )}
 
-            {summonerInfo && (
-                <div>
-                    <h2>Summoner Info</h2>
-                    <p>Name: {summonerInfo.summonerName}</p>
-                    <p>Level: {summonerInfo.summonerLevel}</p>
-                    <img src={summonerInfo.summonerIcon}/>
-                </div>
-            )}
-
             {soloQ && (
-                <div>
+                <div className="LeagueSection">
                     <h2>SoloQ Info</h2>
                     <p>Tier: {soloQ.tier}</p>
                     <p>Division: {soloQ.division}</p>
@@ -73,15 +72,13 @@ const League = () => {
             )}
 
             {flexQ && (
-                <div>
+                <div className="LeagueSection">
                     <h2>FlexQ Info</h2>
                     <p>Tier: {flexQ.tier}</p>
                     <p>Division: {flexQ.division}</p>
                     <p>LP: {flexQ.lp}</p>
                 </div>
             )}
-
-
         </div>
     );
 };

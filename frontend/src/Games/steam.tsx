@@ -70,8 +70,6 @@ const Steam = () => {
 
     return (
         <div>
-            <h1>Steam</h1>
-
             {games.map((game, index) => (
                 <div key={index}>
                     <h2>{game.name}</h2>

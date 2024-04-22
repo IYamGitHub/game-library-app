@@ -4,21 +4,21 @@ export const BASE_API = process.env.REACT_APP_API_BASE;
 export const LEAGUE_API = `${BASE_API}/api`;
 
 export type Summoner = {
-    summonerName: string;
-    summonerLevel: number;
-    summonerIcon: string;
+  summonerName: string;
+  summonerLevel: number;
+  summonerIcon: string;
 };
 
 export type Ranked = {
-    tier: string;
-    division: string;
-    lp: number;
+  tier: string;
+  division: string;
+  lp: number;
 };
 
 export type Mastery = {
-    name: string;
-    level: number;
-    points: number;
+  name: string;
+  level: number;
+  points: number;
 };
 
 const request = axios.create({
