@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Summoner, Ranked, Mastery, getSummoner, getSoloQ, getFlexQ, getHighestMastery } from './leagueClient';
 
 const League = () => {
