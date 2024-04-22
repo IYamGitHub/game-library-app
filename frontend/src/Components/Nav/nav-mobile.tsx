@@ -25,7 +25,7 @@ const NavMobileBar = ({
         {showNav && (
           <CgMenu className="fs-1" onClick={() => setOpenNav(!openNav)} />
         )}
-        <h2 className="align-content-center m-0">NAME</h2>
+        <h2 className="align-content-center m-0">FLAMMMIE</h2>
       </div>
       {showNav && (
         <Avatar imageUrl='blob1-red.png' />
@@ -50,7 +50,7 @@ const NavMobileSlideout = ({
       <div>
         <ComponentClickOutside conditional={openNav} setState={setOpenNav}>
           <div className="d-flex gap-5 justify-content-between">
-            <h2 className="align-content-center m-0">NAME</h2>
+            <h2 className="align-content-center m-0">FLAMMIE</h2>
             {showNav && (
               <VscChromeClose
                 className="fs-1"
