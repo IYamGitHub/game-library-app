@@ -6,29 +6,40 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import './carousel.css';
 
-import { Pagination, Navigation } from 'swiper/modules';
+import { Autoplay, Navigation } from 'swiper/modules';
+import Card from '../Components/Card/card';
 
 export default function Carousel() {
+  const mostLiked = [
+    { name: 'Valorant', image: 'valorant.jpeg' },
+    { name: 'League of Legends', image: 'league-of-legends.jpeg' },
+    { name: 'League of Legends', image: 'league-of-legends.jpeg' },
+    { name: 'League of Legends', image: 'league-of-legends.jpeg' },
+    { name: 'League of Legends', image: 'league-of-legends.jpeg' },
+    { name: 'League of Legends', image: 'league-of-legends.jpeg' }
+  ];
+  
   return (
     <>
       <Swiper
-        slidesPerView={3}
+        slidesPerView={'auto'}
+        spaceBetween={15}
         pagination={{
-          type: 'progressbar',
+          type: 'progressbar'
+        }}
+        autoplay={{
+          delay: 3000,
+          disableOnInteraction: false,
         }}
         navigation={true}
-        modules={[Pagination, Navigation]}
+        modules={[Autoplay, Navigation]}
         className="swiper"
       >
-        <SwiperSlide>
-        <img src="league-of-legends.jpeg" alt="Slide 1" />
-        </SwiperSlide>
-        <SwiperSlide>
-        <img src="background.jpg" alt="Slide 2" />   
-        </SwiperSlide>
-        <SwiperSlide>Slide 3</SwiperSlide>
-        <SwiperSlide>Slide 4</SwiperSlide>
-        <SwiperSlide>Slide 5</SwiperSlide>
+          {mostLiked.map((game) => (
+            <SwiperSlide>
+              <Card image={game.image} text={game.name} />
+            </SwiperSlide>
+          ))}
       </Swiper>
     </>
   );

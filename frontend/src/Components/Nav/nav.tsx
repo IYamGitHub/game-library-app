@@ -5,6 +5,7 @@ import ComponentClickOutside from '../ClickOutsideComponent/click-outside-compon
 import NavMobile from './nav-mobile';
 import Avatar from '../Avatar/avatar';
 import * as client from '../../Users/client';
+import { ProfileType } from '../../LoggedIn/Profile';
 
 type NavTab = {
   text: string;
@@ -46,7 +47,11 @@ const NavUserSection = ({ username }: { username: string }) => {
         <Avatar imageUrl={avatar} />
         {showOptions && (
           <div className="options fs-6">
-            <Link onClick={signout} to="/login" className="text-decoration-underline text-light">
+            <Link
+              onClick={signout}
+              to="/login"
+              className="text-decoration-underline text-light"
+            >
               Sign out
             </Link>
           </div>
@@ -57,12 +62,22 @@ const NavUserSection = ({ username }: { username: string }) => {
 };
 
 const Nav = ({ showNav = true }: NavProps) => {
+  const [user, setUser] = useState<ProfileType>();
   const { pathname } = useLocation();
-  const username = pathname.split('/').pop();
+
+  useEffect(() => {
+    async function getUsername() {
+      const user = await client.profile();
+      setUser(user);
+    }
+    if (showNav) {
+      getUsername();
+    }
+  }, []);
 
   return (
     <>
-      <NavMobile showNav={showNav} pathname={pathname} />
+      <NavMobile showNav={showNav} user={user} />
       <div className="header-section d-none d-sm-flex justify-content-between">
         <div className="d-flex gap-5">
           <h2 className="align-content-center m-0">FLAMMIE</h2>
@@ -71,7 +86,7 @@ const Nav = ({ showNav = true }: NavProps) => {
               {NAVTABS.map((tab, idx) => (
                 <Link
                   key={idx}
-                  to={`/gla/${tab.link}/${username}`}
+                  to={`/gla/${tab.link}/${user?.username}`}
                   className={`nav-link ${
                     pathname.includes(tab.link) ? 'active' : ''
                   }`}
@@ -82,7 +97,7 @@ const Nav = ({ showNav = true }: NavProps) => {
             </div>
           )}
         </div>
-        {showNav && username && <NavUserSection username={username} />}
+        {showNav && user && <NavUserSection username={user?.username} />}
       </div>
     </>
   );
