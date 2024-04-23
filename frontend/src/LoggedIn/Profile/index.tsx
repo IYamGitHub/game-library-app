@@ -35,6 +35,7 @@ const Profile = ({ onRefresh }: ProfileProps) => {
   const [riotId, setRiotId] = useState<string>();
   const [profile, setProfile] = useState<ProfileType | null>(null);
   const [currentUser, setCurrentUser] = useState<ProfileType | null>(null);
+  const [followers, setFollowers] = useState<any[]>([]);
 
   useEffect(() => {
     async function getProfile() {
@@ -47,6 +48,9 @@ const Profile = ({ onRefresh }: ProfileProps) => {
         setRiotId(viewingProfile.riotid);
         setCurrentUser(currentUser);
         setMyProfile(currentUser?.username === viewingProfile?.username);
+
+        const followers = await client.getFollowers(viewingProfile?.username);
+        setFollowers(followers);
       }
     }
     getProfile();
@@ -138,7 +142,7 @@ const Profile = ({ onRefresh }: ProfileProps) => {
             <div className="text-center text-sm-start ms-sm-5 d-flex flex-column">
               <div className="d-flex flex-column">
                 <h1>{username}</h1>
-                <h6 className="text-decoration-underline">100 followers</h6>
+                <h6 className="text-decoration-underline">{followers.length} followers</h6>
               </div>
             </div>
           </div>
