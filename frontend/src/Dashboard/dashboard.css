@@ -1,0 +1,11 @@
+.dashboard-header {
+  background-image: url("../../public/background-image.jpg");
+  height: 300px;
+  background-size: cover;
+  box-shadow: inset 0 0 0 1000px rgba(0,0,0,.4);
+  background-position: left 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 3rem;
+}
