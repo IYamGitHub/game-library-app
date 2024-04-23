@@ -24,7 +24,7 @@ export default function Carousel() {
         <img src="league-of-legends.jpeg" alt="Slide 1" />
         </SwiperSlide>
         <SwiperSlide>
-        <img src="background.jpg" alt="Slide 1" />   
+        <img src="background.jpg" alt="Slide 2" />   
         </SwiperSlide>
         <SwiperSlide>Slide 3</SwiperSlide>
         <SwiperSlide>Slide 4</SwiperSlide>

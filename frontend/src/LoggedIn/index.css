@@ -1,8 +1,10 @@
 .page {
   margin-right: 0;
   flex-grow: 1;
+  width: 100%;
+  height: 100%;
 
   @media(min-width: 768px) {
-    margin-right: var(--panel-width);
+    padding-right: var(--panel-width);
   }
 }
