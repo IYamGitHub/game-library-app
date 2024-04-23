@@ -43,7 +43,7 @@ const League = () => {
             {summonerInfo && (
                 <div className="LeagueSection">
                     <h2>Summoner Info</h2>
-                    <p>Name: {summonerInfo.summonerName}</p>
+                    <p>Name: {summonerName}</p>
                     <p>Level: {summonerInfo.summonerLevel}</p>
                     <img src={summonerInfo.summonerIcon} />
                 </div>

@@ -1,0 +1,49 @@
+import { useEffect, useState } from 'react';
+import { getOwnedGames } from './steamClient';
+import * as client from '../Users/client';
+
+// interface Game {
+    // name: string;
+    // appID: number;
+    // playtime: number;
+    // url_app_icon: string;
+    // achievements: {
+    //     [key: string]: {
+    //         AchievementName: string;
+    //         icon: string;
+    //     };
+    // }[];
+// }
+
+const Steam = () => {
+    const [steamID, setSteamID] = useState('');
+    //const [games, setGames] = useState<Game[]>([]);
+    const [games, setGames] = useState<any>([]);
+
+    useEffect(() => {
+        async function updateSteamPage() {
+            const profile = await client.profile();
+            const user = await client.findUserByUsername(profile.username);
+            setSteamID(user.steamid);
+        }
+        updateSteamPage();
+    }, []);
+
+    useEffect(() => {
+        async function getAllSteamGames() {
+            const ownedGames = await getOwnedGames(steamID);
+            setGames(ownedGames);
+        }
+        getAllSteamGames();
+    }, [steamID]);
+
+    return (
+        <div>
+            <h1>Steam</h1>
+        </div>
+    );
+
+};
+
+export default Steam;
+
