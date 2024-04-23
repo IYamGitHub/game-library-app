@@ -3,6 +3,8 @@ import './index.css';
 import { BiSolidPencil } from 'react-icons/bi';
 import { useParams } from 'react-router';
 import * as client from '../../Users/client';
+import * as gameClient from '../../Games/client';
+import * as steamClient from '../../Games/steamClient';
 import CardRow from '../../Components/Card/cardRow';
 import GameIdForm from './gameIdForm';
 import AvatarModal from './avatarModal';
@@ -70,6 +72,24 @@ const Profile = ({ onRefresh }: ProfileProps) => {
   const saveSteamId = async () => {
     await client.updateUser({ ...profile, steamid: steamId });
   };
+
+  useEffect(() => {
+    async function createAllGames() {
+      if (steamId) {
+        const games = await steamClient.getOwnedGames(steamId);
+        // create games in the database
+        for (let game of games) {
+          const gameData = {
+            origin: 'steam',
+            gamename: game.name,
+            imageurl: game.url_store_header
+          };
+          await gameClient.createGame(gameData);
+        }
+      }
+    }
+    createAllGames();
+  }, [steamId]);
 
   const saveRiotId = async () => {
     await client.updateUser({ ...profile, riotid: riotId });
@@ -156,8 +176,8 @@ const Profile = ({ onRefresh }: ProfileProps) => {
               saveRiotId={saveRiotId}
             />
           ) : currentUser?.following.find(
-              (following) => following === profile?.username
-            ) ? (
+            (following) => following === profile?.username
+          ) ? (
             <button className="btn btn-light px-4" onClick={unfollow}>
               Unfollow
             </button>
