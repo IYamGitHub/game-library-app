@@ -11,7 +11,7 @@ type ProfileProps = {
   onRefresh: () => void;
 };
 
-type ProfileType = {
+export type ProfileType = {
   username: string;
   avatar: string;
   bio: string;
@@ -117,7 +117,7 @@ const Profile = ({ onRefresh }: ProfileProps) => {
         submitAvatar={submitAvatar}
       />
       <div>
-        <div className="profile-header d-flex justify-content-between">
+        <div className="profile-header d-flex flex-column flex-lg-row justify-content-between">
           <div className="d-flex align-items-center">
             <div
               className={`avatar rounded-circle d-flex flex-column ${myProfile && 'my-profile'}`}
@@ -142,7 +142,9 @@ const Profile = ({ onRefresh }: ProfileProps) => {
             <div className="text-center text-sm-start ms-sm-5 d-flex flex-column">
               <div className="d-flex flex-column">
                 <h1>{username}</h1>
-                <h6 className="text-decoration-underline">{followers.length} followers</h6>
+                <h6 className="text-decoration-underline">
+                  {followers.length} followers
+                </h6>
               </div>
             </div>
           </div>
@@ -158,7 +160,7 @@ const Profile = ({ onRefresh }: ProfileProps) => {
           ) : currentUser?.following.find(
               (following) => following === profile?.username
             ) ? (
-            <button className="btn btn-light px-4" onClick={unfollow}>
+            <button className="btn btn-light px-4 mb-2" onClick={unfollow}>
               Unfollow
             </button>
           ) : (
