@@ -12,6 +12,7 @@ type NavTab = {
 };
 
 export const NAVTABS: NavTab[] = [
+  { text: 'Dashboard', link: 'dashboard' },
   { text: 'Profile', link: 'profile' },
   { text: 'My Games', link: 'games' }
 ];
