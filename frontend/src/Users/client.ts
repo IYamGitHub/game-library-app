@@ -91,3 +91,8 @@ export const profile = async () => {
   const response = await request.post(`${USERS_API}/profile`);
   return response.data;
 };
+
+export const getFollowers = async (username: string) => {
+  const response = await request.get(`${USERS_API}/${username}/followers`);
+  return response.data;
+};
