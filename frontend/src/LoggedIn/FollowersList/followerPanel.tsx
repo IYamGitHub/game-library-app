@@ -23,9 +23,9 @@ export const FollowRow = ({ username, avatar, inModal = false }: Follower) => {
   );
 };
 
-export const FollowContent = ({ refresh }: { refresh: boolean }) => {
-  const [following, setFollowing] = useState<any[]>([]);
+const FollowPanel = ({ refresh }: { refresh: boolean }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [following, setFollowing] = useState<any[]>([]);
 
   useEffect(() => {
     async function getFollowing() {
@@ -43,33 +43,27 @@ export const FollowContent = ({ refresh }: { refresh: boolean }) => {
         setShowModal={setShowModal}
         setFollowing={setFollowing}
       />
-      <div className="overflow-hidden flex-grow-1">
-        <div className="following-title align-items-center">
-          <h2 className="m-0">Following</h2>
-          <IoPersonAdd
-            className="fs-3 add-icon"
-            onClick={() => setShowModal(true)}
-          />
-        </div>
-        <div className="d-flex flex-column gap-1 h-100 overflow-scroll">
-          {following.map((following, idx) => (
-            <FollowRow
-              key={idx}
-              username={following.username}
-              avatar={following.avatar}
+      <div className="panel d-none d-sm-flex">
+        <div className="overflow-hidden flex-grow-1">
+          <div className="following-title align-items-center">
+            <h2 className="m-0">Following</h2>
+            <IoPersonAdd
+              className="fs-3 add-icon"
+              onClick={() => setShowModal(true)}
             />
-          ))}
+          </div>
+          <div className="d-flex flex-column gap-1 h-100 overflow-scroll">
+            {following.map((following, idx) => (
+              <FollowRow
+                key={idx}
+                username={following.username}
+                avatar={following.avatar}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </>
-  );
-};
-
-const FollowPanel = ({ refresh }: { refresh: boolean }) => {
-  return (
-    <div className="panel d-none d-md-flex">
-      <FollowContent refresh={refresh} />
-    </div>
   );
 };
 

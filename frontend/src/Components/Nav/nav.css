@@ -29,7 +29,7 @@
   color: var(--gla-dark-grey-blue);
 }
 
-.slideout {
+.nav-slideout {
   background-color: black;
   gap: 1rem;
   padding: 1.5rem;
@@ -37,27 +37,19 @@
   flex-direction: column;
   width: 60vw;
   height: 100vh;
-  box-shadow: none;
-  justify-content: space-between;
-  text-align: center;
-  z-index: 10;
   position: absolute;
   top: 0;
   left: -160vw;
   transition: left 1s;
+  box-shadow: none;
+  justify-content: space-between;
+  text-align: center;
+  z-index: 10;
 
   &.show {
     left: 0;
     box-shadow: 0px 0px 40px black;
   }
-}
-
-.nav-slideout {
-  width: 60vw;
-}
-
-.follow-slideout {
-  width: 80vw;
 }
 
 .nav-mobile {
