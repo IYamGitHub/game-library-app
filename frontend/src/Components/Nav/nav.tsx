@@ -68,7 +68,9 @@ const Nav = ({ showNav = true }: NavProps) => {
       const username = (await client.profile()).username;
       setUsername(username);
     }
-    getUsername();
+    if (showNav) {
+      getUsername();
+    }
   }, []);
 
   return (
