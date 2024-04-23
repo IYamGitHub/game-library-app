@@ -11,7 +11,7 @@ export interface User {
   riotid: string;
   steamid: string;
   following: [];
-  likes: [],
+  likes: [];
 }
 
 const request = axios.create({
@@ -50,12 +50,22 @@ export const findFollowers = async (username: string) => {
 
 export const follow = async (username: string, followingUsername: string) => {
   const response = await request.put(
-    `${USERS_API}/${username}/${followingUsername}`
+    `${USERS_API}/${username}/follow/${followingUsername}`
   );
   return response.data;
 };
 
-export const searchUsername = async (username: string, searchString: string) => {
+export const unfollow = async (username: string, followingUsername: string) => {
+  const response = await request.put(
+    `${USERS_API}/${username}/unfollow/${followingUsername}`
+  );
+  return response.data;
+};
+
+export const searchUsername = async (
+  username: string,
+  searchString: string
+) => {
   const response = await request.get(
     `${USERS_API}/search/${username}/${searchString}`
   );
