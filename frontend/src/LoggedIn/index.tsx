@@ -4,6 +4,7 @@ import Profile from './Profile';
 import Nav from '../Components/Nav/nav';
 import FollowersList from './FollowersList/followerPanel';
 import './index.css';
+import Dashboard from '../Dashboard/dashboard';
 
 const LoggedIn = () => {
   const [navRefresh, setNavRefresh] = useState(false);
