@@ -9,16 +9,16 @@ const Steam = ({ passedInGame }: { passedInGame: string }) => {
 
     useEffect(() => {
         async function updateSteamPage() {
-        try {
-            const profile = await client.profile();
+            try {
+                const profile = await client.profile();
                 const user = await client.findUserByUsername(profile.username);
                 setSteamID(user.steamid);
             }
-        catch(e) {
-            console.log(e)
+            catch (e) {
+                console.log(e)
+            }
         }
         updateSteamPage();
-        }
     }, []);
 
     useEffect(() => {
