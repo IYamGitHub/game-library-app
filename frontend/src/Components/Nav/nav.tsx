@@ -14,7 +14,6 @@ type NavTab = {
 export const NAVTABS: NavTab[] = [
   { text: 'Dashboard', link: 'dashboard' },
   { text: 'Profile', link: 'profile' },
-  { text: 'My Games', link: 'games' }
 ];
 
 export interface NavProps {
@@ -93,6 +92,18 @@ const Nav = ({ showNav = true }: NavProps) => {
                   {tab.text}
                 </Link>
               ))}
+            </div>
+          )}
+          {!showNav && username === '' && (
+            <div className="d-flex gap-5 align-items-center fs-3">
+              <Link
+                to={`/dashboard`}
+                className={`nav-link ${
+                  pathname.includes('dashboard') ? 'active' : ''
+                }`}
+              >
+              Dashboard
+              </Link>
             </div>
           )}
         </div>

@@ -19,7 +19,6 @@ export default function Carousel() {
     { name: 'Valorant', image: 'valorant.jpeg' },
     { name: 'League of Legends', image: 'league-of-legends.jpeg' },
   ];
-  
 
   useEffect(() => {
     async function getGameImage(gameName: any) {
@@ -32,7 +31,6 @@ export default function Carousel() {
 
     async function updateMostLiked() {
       const user = await client.profile();
-
       if (user) {
         const gamePromises = user.likes.map(async (gameName: string) => {
           const imageUrl = await getGameImage(gameName);

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './index.css';
 import { BiSolidPencil } from 'react-icons/bi';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import * as client from '../../Users/client';
 import * as gameClient from '../../Games/client';
 import * as steamClient from '../../Games/steamClient';
@@ -20,6 +20,7 @@ type ProfileType = {
   riotid: string;
   steamid: string;
   following: string[];
+  role: string;
 };
 
 //TODO
@@ -38,6 +39,9 @@ const Profile = ({ onRefresh }: ProfileProps) => {
   const [profile, setProfile] = useState<ProfileType | null>(null);
   const [currentUser, setCurrentUser] = useState<ProfileType | null>(null);
   const [followers, setFollowers] = useState<any[]>([]);
+  const [adminUser, setAdminUser] = useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function getProfile() {
@@ -50,6 +54,7 @@ const Profile = ({ onRefresh }: ProfileProps) => {
         setRiotId(viewingProfile.riotid);
         setCurrentUser(currentUser);
         setMyProfile(currentUser?.username === viewingProfile?.username);
+        setAdminUser(currentUser.role === "ADMIN")
 
         const followers = await client.getFollowers(viewingProfile?.username);
         setFollowers(followers);
@@ -129,6 +134,19 @@ const Profile = ({ onRefresh }: ProfileProps) => {
     }
   };
 
+  const deleteUser = async (user : any) => {
+    try {
+      const viewingProfile = await client.findUserByUsername(profile?.username || '');
+      await client.deleteUser(viewingProfile);
+      if (currentUser) {
+        alert(profile?.username + " has been deleted :(")
+        navigate(`/gla/profile/${currentUser.username}`);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <AvatarModal
@@ -178,14 +196,27 @@ const Profile = ({ onRefresh }: ProfileProps) => {
           ) : currentUser?.following.find(
             (following) => following === profile?.username
           ) ? (
-            <button className="btn btn-light px-4" onClick={unfollow}>
-              Unfollow
-            </button>
+            <div>
+              <button className="btn btn-light px-4" onClick={unfollow}>
+                Unfollow
+              </button>
+              {adminUser && 
+              (<button className="btn btn-danger px-4" onClick={deleteUser}>
+                Delete
+              </button>)}
+            </div>
           ) : (
-            <button className="btn btn-light px-4" onClick={follow}>
-              Follow
-            </button>
-          )}
+            <div>
+              <button className="btn btn-light px-4" onClick={follow}>
+                Follow
+              </button>
+              {adminUser && 
+              (<button className="btn btn-danger px-4" onClick={deleteUser}>
+                Delete
+              </button>)}
+            </div>
+          )
+          }
         </div>
         <div className="mt-5">
           <div className="d-flex w-100 justify-content-between">
