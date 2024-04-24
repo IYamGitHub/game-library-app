@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './card.css';
 import { GoHeart, GoHeartFill } from 'react-icons/go';
-import * as client from '../../Users/client';import Modal from '../Modal/modal';
+import Modal from '../Modal/modal';
+import * as client from '../../Users/client';
 
 interface CardProps {
   image?: string;
@@ -12,8 +13,6 @@ interface CardProps {
 }
 
 const Card = ({ image, text, Component }: CardProps) => {
-const Card = ({ image, text }: CardProps) => {
-
   const [liked, setLiked] = useState<boolean>(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
