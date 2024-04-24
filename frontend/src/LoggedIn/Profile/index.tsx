@@ -205,6 +205,7 @@ const Profile = ({ onRefresh }: ProfileProps) => {
                 rows={7}
                 value={editBioText}
                 onChange={(e) => setEditBioText(e.target.value)}
+                style={{ backgroundColor: 'transparent', color: 'inherit' }}
               ></textarea>
               <div className="ms-auto">
                 <button
