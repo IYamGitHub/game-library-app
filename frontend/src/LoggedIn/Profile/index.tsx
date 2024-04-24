@@ -216,7 +216,7 @@ const Profile = ({ onRefresh }: ProfileProps) => {
                 Follow
               </button>
               {adminUser && 
-              (<button className="btn btn-danger px-4" onClick={deleteUser}>
+              (<button className="btn btn-danger px-4 me-2" onClick={deleteUser}>
                 Delete
               </button>)}
             </div>

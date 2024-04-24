@@ -21,7 +21,6 @@ const FollowModal = ({
   const username = pathname.split('/').pop();
   const [searchString, setSearchString] = useState<string>('');
   const [results, setResults] = useState<Follower[]>([]);
-  const [noResults, setNoResults] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const toggleModal = () => {
@@ -38,12 +37,6 @@ const FollowModal = ({
       else {
         const results = await client.anonymousSearchUsername(searchString);
         setResults(results);
-      }
-      
-      if (results.length !== 0) {
-        setNoResults(false);
-      } else {
-        setNoResults(true);
       }
     } else {
       setResults([]);
@@ -92,7 +85,7 @@ const FollowModal = ({
             </div>
           </div>
         ))}
-        {noResults && <p className="mt-3">No search results</p>}
+        {results.length === 0 && <p className="mt-3">No search results</p>}
       </div>
     </Modal>
   );
