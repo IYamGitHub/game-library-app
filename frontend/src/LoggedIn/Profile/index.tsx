@@ -136,7 +136,7 @@ const Profile = ({ onRefresh }: ProfileProps) => {
         setShowModal={setShowModal}
         submitAvatar={submitAvatar}
       />
-      <div>
+      <div style={{ marginBottom: '40px' }}>
         <div className="profile-header d-flex justify-content-between">
           <div className="d-flex align-items-center">
             <div
