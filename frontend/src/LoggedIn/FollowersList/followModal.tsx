@@ -47,6 +47,7 @@ const FollowModal = ({
     if (username) {
       await client.follow(username, user.username);
       setFollowing((prev: Follower[]) => [...prev, user]);
+      setResults((prev) => prev.filter(f => f.username !== user.username))
     }
   };
 
