@@ -23,7 +23,7 @@ const CardRow = () => {
         if (res.origin === 'league') {
           res.component = League;
         } else if (res.origin === 'steam') {
-          res.component = Steam;
+          res.component = () => <Steam passedInName={res.gamename}/>;
         } else {
           res.component = undefined;
         } 

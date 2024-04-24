@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import * as steamClient from './steamClient';
 import * as client from '../Users/client';
 
-const Steam = () => {
+const Steam = (passedInGame : any) => {
     const [steamID, setSteamID] = useState('');
     const [games, setGames] = useState<steamClient.OwnedGames[]>([]);
 
@@ -18,9 +18,7 @@ const Steam = () => {
     useEffect(() => {
         async function getAllSteamGames() {
             const ownedGames = await steamClient.getOwnedGames(steamID);
-            //console.log('ownedGames:', ownedGames);
             setGames(ownedGames);
-            console.log(games);
         }
         getAllSteamGames();
     }, [steamID]);
