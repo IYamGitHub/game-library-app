@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Card from './card';
 import League from '../../Games/league';
 import Steam from '../../Games/steam';
-
 import * as client from '../../Games/client';
 
 interface Game {
@@ -23,7 +22,7 @@ const CardRow = () => {
         if (res.origin === 'league') {
           res.component = League;
         } else if (res.origin === 'steam') {
-          res.component = () => <Steam passedInName={res.gamename}/>;
+          res.component = () => <Steam passedInGame={res.gamename}/>;
         } else {
           res.component = undefined;
         } 

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import * as steamClient from './steamClient';
 import * as client from '../Users/client';
 
-const Steam = (passedInGame : any) => {
+const Steam = ({ passedInGame } : { passedInGame: string }) => {
     const [steamID, setSteamID] = useState('');
     const [games, setGames] = useState<steamClient.OwnedGames[]>([]);
 
@@ -26,11 +26,11 @@ const Steam = (passedInGame : any) => {
     return (
         <div className="SteamContainer">
             <h2>Steam Games</h2>
-            {Object.entries(games).map(([key, value]) => {
+            {games.filter(game => game.name === passedInGame).map((game, index) => {
                 return (
-                    <div key={key}>
-                        <h3>{value.name}</h3>
-                        <img src={value.url_store_header} alt={value.name} />
+                    <div key={index}>
+                        <h3>{game.name}</h3>
+                        <img src={game.url_store_header} alt={game.name} />
                     </div>
                 );
             })}
