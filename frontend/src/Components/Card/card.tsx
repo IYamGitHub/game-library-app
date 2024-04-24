@@ -26,13 +26,27 @@ const Card = ({ image, text, Component }: CardProps) => {
 
   useEffect(() => {
     async function updateLiked() {
-      if (liked) {
-        const user = await client.profile();
-        await client.updateUser({ ...user, likes: [...user.likes, text] });
+      const user = await client.profile();
+      if (user.likes.includes(text)) {
+        setLiked(true);
       }
     }
     updateLiked();
-  }, [liked]);
+  }, []);
+
+  const updateLikedGames = async () => {
+      const user = await client.profile();
+      
+      if (!user.likes.includes(text)) {
+        await client.updateUser({ ...user, likes: [...user.likes, text] });
+        setLiked(true)
+      }
+      else if (user.likes.includes(text)) {
+        const removeLastLiked = user.likes.slice(0, -1);
+        await client.updateUser({ ...user, likes: removeLastLiked });
+        setLiked(false)
+      }
+  }
 
   return (
     <div>
@@ -41,9 +55,9 @@ const Card = ({ image, text, Component }: CardProps) => {
         <div className="gla-card-body">
           <p className="card-text m-0">{text}</p>
           {liked ? (
-            <GoHeartFill className="like-icon" onClick={() => setLiked(!liked)} />
+            <GoHeartFill className="like-icon" onClick={updateLikedGames} />
           ) : (
-            <GoHeart className="like-icon" onClick={() => setLiked(!liked)} />
+            <GoHeart className="like-icon" onClick={updateLikedGames} />
           )}
         </div>
       </Link>

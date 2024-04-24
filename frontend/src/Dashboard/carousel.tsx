@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
@@ -8,16 +8,46 @@ import './carousel.css';
 
 import { Autoplay, Navigation } from 'swiper/modules';
 import Card from '../Components/Card/card';
+import * as client from '../Users/client';
+import * as gameClient from '../Games/client';
+
 
 export default function Carousel() {
-  const mostLiked = [
+  const [mostLiked, setMostLiked] = useState<Array<{ name: string; image: string }>>([]);
+
+  const recommendations = [
     { name: 'Valorant', image: 'valorant.jpeg' },
     { name: 'League of Legends', image: 'league-of-legends.jpeg' },
-    { name: 'League of Legends', image: 'league-of-legends.jpeg' },
-    { name: 'League of Legends', image: 'league-of-legends.jpeg' },
-    { name: 'League of Legends', image: 'league-of-legends.jpeg' },
-    { name: 'League of Legends', image: 'league-of-legends.jpeg' }
   ];
+  
+
+  useEffect(() => {
+    async function getGameImage(gameName: any) {
+      const allGames = await gameClient.findAllGames();
+      const game = allGames.find((game: any) => game.gamename === gameName);
+      if (game) {
+        return game.imageurl;    
+      }
+    }
+
+    async function updateMostLiked() {
+      const user = await client.profile();
+
+      if (user) {
+        const gamePromises = user.likes.map(async (gameName: string) => {
+          const imageUrl = await getGameImage(gameName);
+          return { name: gameName, image: imageUrl };
+        });
+        const updatedMostLiked = await Promise.all(gamePromises);
+        setMostLiked(updatedMostLiked);
+      }
+      else {
+        setMostLiked(recommendations);
+      }
+    }
+    updateMostLiked();
+  }, []);
+  
   
   return (
     <>
