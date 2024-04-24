@@ -30,11 +30,18 @@ const FollowModal = ({
 
   const onSubmit = async (searchString: string) => {
     if (searchString) {
-      const results =
-        username && (await client.searchUsername(username, searchString));
+      if (username) {
+        const results =
+          username && (await client.searchUsername(username, searchString));
+        setResults(results);
+      }
+      else {
+        const results = await client.anonymousSearchUsername(searchString);
+        setResults(results);
+      }
+      
       if (results.length !== 0) {
         setNoResults(false);
-        setResults(results);
       } else {
         setNoResults(true);
       }

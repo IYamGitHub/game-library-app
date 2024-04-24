@@ -26,15 +26,21 @@ const Card = ({ image, text, Component }: CardProps) => {
 
   useEffect(() => {
     async function updateLiked() {
-      const user = await client.profile();
-      if (user.likes.includes(text)) {
-        setLiked(true);
+      try {
+        const user = await client.profile();
+        if (user.likes.includes(text)) {
+          setLiked(true);
+        }
+      }
+      catch(e) {
+        console.log(e)
       }
     }
     updateLiked();
   }, []);
 
   const updateLikedGames = async () => {
+    try {
       const user = await client.profile();
       
       if (!user.likes.includes(text)) {
@@ -46,6 +52,10 @@ const Card = ({ image, text, Component }: CardProps) => {
         await client.updateUser({ ...user, likes: removeLastLiked });
         setLiked(false)
       }
+    }
+    catch(e) {
+      console.log(e)
+    }
   }
 
   return (

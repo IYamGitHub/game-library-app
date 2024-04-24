@@ -14,9 +14,12 @@ type NavTab = {
 export const NAVTABS: NavTab[] = [
   { text: 'Dashboard', link: 'dashboard' },
   { text: 'Profile', link: 'profile' },
-  { text: 'My Games', link: 'games' }
 ];
 
+export const ANONTABS: NavTab[] = [
+  { text: 'Register', link: 'register' },
+  { text: 'Dashboard', link: 'gla/dashboard' },
+];
 export interface NavProps {
   showNav: boolean;
 }
@@ -66,8 +69,11 @@ const Nav = ({ showNav = true }: NavProps) => {
 
   useEffect(() => {
     async function getUsername() {
-      const username = (await client.profile()).username;
-      setUsername(username);
+      const user = await client.profile()
+      if (user) {
+        const username = user.username;
+        setUsername(username)
+      }
     }
     if (showNav) {
       getUsername();
@@ -94,6 +100,21 @@ const Nav = ({ showNav = true }: NavProps) => {
                 </Link>
               ))}
             </div>
+          )}
+          {!showNav && username === '' && (
+            <div className="d-flex gap-5 align-items-center fs-3">
+            {ANONTABS.map((tab, idx) => (
+              <Link
+                key={idx}
+                to={`/${tab.link}/${username}`}
+                className={`nav-link ${
+                  pathname.includes(tab.link) ? 'active' : ''
+                }`}
+              >
+                {tab.text}
+              </Link>
+            ))}
+          </div>
           )}
         </div>
         {showNav && username && <NavUserSection username={username} />}
