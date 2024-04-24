@@ -159,7 +159,7 @@ const Profile = ({ onRefresh }: ProfileProps) => {
         setShowModal={setShowModal}
         submitAvatar={submitAvatar}
       />
-      <div>
+      <div style={{ marginBottom: '40px' }}>
         <div className="profile-header d-flex justify-content-between">
           <div className="d-flex align-items-center">
             <div
@@ -216,7 +216,7 @@ const Profile = ({ onRefresh }: ProfileProps) => {
                 Follow
               </button>
               {adminUser && 
-              (<button className="btn btn-danger px-4 me-2" onClick={deleteUser}>
+              (<button className="btn btn-danger px-4" onClick={deleteUser}>
                 Delete
               </button>)}
             </div>
@@ -263,8 +263,8 @@ const Profile = ({ onRefresh }: ProfileProps) => {
           )}
         </div>
       </div>
-      <hr/>
       <h1>Games</h1>
+      <hr/>
       <CardRow />
     </>
   );
