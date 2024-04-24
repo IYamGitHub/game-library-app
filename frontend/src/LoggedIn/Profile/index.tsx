@@ -159,7 +159,7 @@ const Profile = ({ onRefresh }: ProfileProps) => {
         setShowModal={setShowModal}
         submitAvatar={submitAvatar}
       />
-      <div style={{ marginBottom: '40px' }}>
+      <div>
         <div className="profile-header d-flex justify-content-between">
           <div className="d-flex align-items-center">
             <div
@@ -263,6 +263,8 @@ const Profile = ({ onRefresh }: ProfileProps) => {
           )}
         </div>
       </div>
+      <hr/>
+      <h1>Games</h1>
       <CardRow />
     </>
   );
