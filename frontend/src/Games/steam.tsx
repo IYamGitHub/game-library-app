@@ -1,27 +1,10 @@
 import { useEffect, useState } from 'react';
-import { getOwnedGames } from './steamClient';
+import * as steamClient from './steamClient';
 import * as client from '../Users/client';
-
-interface Game {
-    name: string;
-    appID: number;
-    playtime: number;
-    playtime_recent: number;
-    url_store: string;
-    url_store_header: string;
-    url_app_logo: string;
-    url_app_icon: string;
-    achievements: {
-        [key: string]: {
-            AchievementName: string;
-            icon: string;
-        };
-    }[];
-}
 
 const Steam = () => {
     const [steamID, setSteamID] = useState('');
-    const [games, setGames] = useState<Game[]>([]);
+    const [games, setGames] = useState<steamClient.OwnedGames[]>([]);
 
     useEffect(() => {
         async function updateSteamPage() {
@@ -32,21 +15,29 @@ const Steam = () => {
         updateSteamPage();
     }, []);
 
-    // useEffect(() => {
-    //     async function getAllSteamGames() {
-    //         const ownedGames = await getOwnedGames(steamID);
-    //         setGames(ownedGames);
-    //     }
-    //     getAllSteamGames();
-    // }, [steamID]);
+    useEffect(() => {
+        async function getAllSteamGames() {
+            const ownedGames = await steamClient.getOwnedGames(steamID);
+            //console.log('ownedGames:', ownedGames);
+            setGames(ownedGames);
+            console.log(games);
+        }
+        getAllSteamGames();
+    }, [steamID]);
 
     return (
-        <div>
-            <h1>Steam</h1>
+        <div className="SteamContainer">
+            <h2>Steam Games</h2>
+            {Object.entries(games).map(([key, value]) => {
+                return (
+                    <div key={key}>
+                        <h3>{value.name}</h3>
+                        <img src={value.url_store_header} alt={value.name} />
+                    </div>
+                );
+            })}
         </div>
     );
-
 };
 
 export default Steam;
-

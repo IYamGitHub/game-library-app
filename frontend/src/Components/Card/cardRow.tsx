@@ -34,7 +34,6 @@ const CardRow = () => {
     fetchGames();
   }, []);
 
-  console.log(games);
   return (
     <div className="row row-cols-1 row-cols-lg-2 row-cols-xl-4 g-4">
       {games?.map((game) => (
