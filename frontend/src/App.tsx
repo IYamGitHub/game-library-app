@@ -11,11 +11,11 @@ function App() {
   return (
     <HashRouter>
       <Routes>
-        <Route path="/"             element={<Navigate to="/register"/>}/>
-        <Route path="/gla/dashboard/"    element={<AnonymousDashboard/>}/>
-        <Route path="/login/*"      element={<Login/>}/>
-        <Route path="/register/*"   element={<Register />}/>
-        <Route path="/gla/*"        element={<LoggedIn />}/>
+        <Route path="/"                   element={<Navigate to="/register"/>}/>
+        <Route path="/gla/dashboard/"     element={<AnonymousDashboard/>}/>
+        <Route path="/login/*"            element={<Login/>}/>
+        <Route path="/register/*"         element={<Register />}/>
+        <Route path="/gla/*"              element={<LoggedIn />}/>
       </Routes>
     </HashRouter>
   );
