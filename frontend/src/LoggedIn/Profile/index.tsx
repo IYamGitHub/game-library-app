@@ -162,7 +162,7 @@ const Profile = ({ onRefresh }: ProfileProps) => {
             <div className="text-center text-sm-start ms-sm-5 d-flex flex-column">
               <div className="d-flex flex-column">
                 <h1>{username}</h1>
-                <h6 className="text-decoration-underline">{followers.length} followers</h6>
+                <h6>{followers.length} followers</h6>
               </div>
             </div>
           </div>
