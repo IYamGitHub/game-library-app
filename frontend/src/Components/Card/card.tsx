@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './card.css';
 import { GoHeart, GoHeartFill } from 'react-icons/go';
-
+import { User } from '../../Users/client';
+import * as client from '../../Users/client';
 interface CardProps {
   image?: string;
   text?: string;
@@ -10,7 +11,19 @@ interface CardProps {
 }
 
 const Card = ({ image, text }: CardProps) => {
+
   const [liked, setLiked] = useState<boolean>(false);
+
+  useEffect(() => {
+    async function updateLiked() {
+      if (liked) {
+        const user = await client.profile();
+        await client.updateUser({ ...user, likes: [...user.likes, text] });
+      }
+    }
+    updateLiked();
+  }, [liked]);
+
   return (
     <Link className="gla-card" to="#">
       <img src={image} className="gla-card-image" alt="..." />
