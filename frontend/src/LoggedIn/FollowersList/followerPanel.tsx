@@ -52,7 +52,7 @@ const FollowPanel = ({ refresh }: { refresh: boolean }) => {
               onClick={() => setShowModal(true)}
             />
           </div>
-          <div className="d-flex flex-column gap-1 h-100 overflow-scroll">
+          <div className="d-flex flex-column gap-1 h-100 overflow-scroll scrollable-content">
             {following.map((following, idx) => (
               <FollowRow
                 key={idx}

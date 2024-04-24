@@ -29,6 +29,7 @@ const GameIdForm = ({
           id="steamId"
           value={steamId}
           onChange={(e) => setSteamId(e.target.value)}
+          style={{ backgroundColor: 'transparent', color: 'inherit' }}
         ></input>
       </form>
       <form onSubmit={saveRiotId}>
@@ -41,6 +42,7 @@ const GameIdForm = ({
           id="riotId"
           value={riotId}
           onChange={(e) => setRiotId(e.target.value)}
+          style={{ backgroundColor: 'transparent', color: 'inherit' }}
         ></input>
       </form>
     </div>
