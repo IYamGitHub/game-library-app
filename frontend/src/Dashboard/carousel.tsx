@@ -16,8 +16,11 @@ export default function Carousel() {
   const [mostLiked, setMostLiked] = useState<Array<{ name: string; image: string }>>([]);
 
   const recommendations = [
-    { name: 'Valorant', image: 'valorant.jpeg' },
-    { name: 'League of Legends', image: 'league-of-legends.jpeg' },
+    { name: 'League of Legends',  image: 'league-of-legends.jpeg' },
+    { name: 'Valorant',           image: 'valorant.jpeg' },
+    { name: 'Palworld',           image: 'https://steamcdn-a.akamaihd.net/steam/apps/1623730/header.jpg' },
+    { name: 'Terraria',           image: 'https://steamcdn-a.akamaihd.net/steam/apps/105600/header.jpg' },
+    { name: 'Among Us',           image: '	https://steamcdn-a.akamaihd.net/steam/apps/945360/header.jpg' },
   ];
 
   useEffect(() => {

@@ -19,80 +19,150 @@ const request = axios.create({
 });
 
 export const createUser = async (user: any) => {
-  const response = await request.post(`${USERS_API}`, user);
-  return response.data;
+  try {
+    const response = await request.post(`${USERS_API}`, user);
+    return response.data;
+  }
+  catch(e) {
+    console.log(e)
+  }
 };
 
 export const updateUser = async (user: any) => {
-  const response = await request.put(`${USERS_API}/${user.username}`, user);
-  return response.data;
+  try {
+    const response = await request.put(`${USERS_API}/${user.username}`, user);
+    return response.data;
+  }
+  catch(e) {
+    console.log(e)
+  }
 };
 
 export const deleteUser = async (user: any) => {
-  const response = await request.delete(`${USERS_API}/${user.username}`);
-  return response.data;
+  try {
+    const response = await request.delete(`${USERS_API}/${user.username}`);
+    return response.data;
+  }
+  catch(e) {
+    console.log(e)
+  }
 };
 
 export const findAllUsers = async () => {
-  const response = await request.get(`${USERS_API}`);
-  return response.data;
+  try {
+    const response = await request.get(`${USERS_API}`);
+    return response.data;
+  }
+  catch(e) {
+    console.log(e)
+  }
 };
 
 export const findUserByUsername = async (username: string) => {
-  const response = await request.get(`${USERS_API}/${username}`);
-  return response.data;
+  try {
+    const response = await request.get(`${USERS_API}/${username}`);
+    return response.data;
+  }
+  catch(e) {
+    console.log(e)
+  }
 };
 
 export const findFollowers = async (username: string) => {
-  const response = await request.get(`${USERS_API}/${username}/following`);
-  return response.data;
+  try {
+    const response = await request.get(`${USERS_API}/${username}/following`);
+    return response.data;
+  }
+  catch(e) {
+    console.log(e)
+  }
 };
 
 export const follow = async (username: string, followingUsername: string) => {
-  const response = await request.put(
-    `${USERS_API}/${username}/follow/${followingUsername}`
-  );
-  return response.data;
+  try {
+    const response = await request.put(
+      `${USERS_API}/${username}/follow/${followingUsername}`
+    );
+    return response.data;
+  }
+  catch(e) {
+    console.log(e)
+  }
 };
 
 export const unfollow = async (username: string, followingUsername: string) => {
-  const response = await request.put(
-    `${USERS_API}/${username}/unfollow/${followingUsername}`
-  );
-  return response.data;
+  try {
+    const response = await request.put(
+      `${USERS_API}/${username}/unfollow/${followingUsername}`
+    );
+    return response.data;
+  }
+  catch(e) {
+    console.log(e)
+  }
 };
 
 export const searchUsername = async (
   username: string,
   searchString: string
 ) => {
-  const response = await request.get(
-    `${USERS_API}/search/${username}/${searchString}`
-  );
-  return response.data;
+  try {
+    const response = await request.get(
+      `${USERS_API}/search/${username}/${searchString}`
+    );
+    return response.data;
+  }
+  catch(e) {
+    console.log(e)
+  }
 };
 
 export const signup = async (user: any) => {
-  const response = await request.post(`${USERS_API}/signup`, user);
-  return response.data;
+  try {
+    const response = await request.post(`${USERS_API}/signup`, user);
+    return response.data;
+  }
+  catch(e) {
+    console.log(e)
+  }
 };
 
 export const signin = async (credentials: User) => {
-  const response = await request.post(`${USERS_API}/signin`, credentials);
-  return response.data;
+  try {
+    const response = await request.post(`${USERS_API}/signin`, credentials);
+    return response.data;
+  }
+  catch(e) {
+    console.log(e)
+  }
 };
 
 export const signout = async () => {
-  const response = await request.post(`${USERS_API}/signout`);
-  return response.data;
+  try {
+    const response = await request.post(`${USERS_API}/signout`);
+    return response.data;
+  }
+  catch(e) {
+    console.log(e)
+  }
 };
 
 export const profile = async () => {
-  const response = await request.post(`${USERS_API}/profile`);
-  return response.data;
+  try {
+    const response = await request.post(`${USERS_API}/profile`);
+    return response.data;
+  }
+  catch(e) {
+    console.log(e)
+  }
 };
 
 export const getFollowers = async (username: string) => {
-  const response = await request.get(`${USERS_API}/${username}/followers`);
-  return response.data;
+  try {
+    const response = await request.get(`${USERS_API}/${username}/followers`);
+    return response.data;
+  }
+  catch(e) {
+    console.log(e)
+  }
 };

@@ -28,7 +28,6 @@ const Dashboard = () => {
       <div className='dashboard-header'>
         <h1>Dashboard</h1>
       </div>
-      {!profile && <h3>User Recommended Games on Flammie!</h3>}
       {profile && <h3>Your Liked Games on Flammie!</h3>}
       <Carousel />
     </div>

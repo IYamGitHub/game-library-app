@@ -45,19 +45,24 @@ const Profile = ({ onRefresh }: ProfileProps) => {
 
   useEffect(() => {
     async function getProfile() {
-      if (username) {
-        const currentUser = await client.profile();
-        const viewingProfile = await client.findUserByUsername(username);
-        setProfile(viewingProfile);
-        setBio(viewingProfile.bio);
-        setSteamId(viewingProfile.steamid);
-        setRiotId(viewingProfile.riotid);
-        setCurrentUser(currentUser);
-        setMyProfile(currentUser?.username === viewingProfile?.username);
-        setAdminUser(currentUser.role === "ADMIN")
+      try {
+        if (username) {
+          const currentUser = await client.profile();
+          const viewingProfile = await client.findUserByUsername(username);
+          setProfile(viewingProfile);
+          setBio(viewingProfile.bio);
+          setSteamId(viewingProfile.steamid);
+          setRiotId(viewingProfile.riotid);
+          setCurrentUser(currentUser);
+          setMyProfile(currentUser?.username === viewingProfile?.username);
+          setAdminUser(currentUser.role === "ADMIN")
 
-        const followers = await client.getFollowers(viewingProfile?.username);
-        setFollowers(followers);
+          const followers = await client.getFollowers(viewingProfile?.username);
+          setFollowers(followers);
+        }
+      }
+      catch(e) {
+        console.log(e)
       }
     }
     getProfile();

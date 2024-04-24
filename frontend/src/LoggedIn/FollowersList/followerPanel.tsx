@@ -29,9 +29,14 @@ const FollowPanel = ({ refresh }: { refresh: boolean }) => {
 
   useEffect(() => {
     async function getFollowing() {
-      const profile = await client.profile();
-      const following = await client.findFollowers(profile.username);
-      setFollowing(following);
+      try {
+        const profile = await client.profile();
+        const following = await client.findFollowers(profile.username);
+        setFollowing(following);
+      }
+      catch(e) {
+        console.log(e)
+      }
     }
     getFollowing();
   }, [refresh]);
