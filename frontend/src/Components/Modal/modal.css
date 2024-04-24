@@ -40,4 +40,9 @@
 .modal-body {
   overflow-y: scroll;
   width: 100%;
+  scrollbar-width: none;
+}
+
+.modal-body::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
 }
