@@ -117,6 +117,20 @@ export const searchUsername = async (
   }
 };
 
+export const anonymousSearchUsername = async (
+  searchString: string
+) => {
+  try {
+    const response = await request.get(
+      `${USERS_API}/search/${searchString}`
+    );
+    return response.data;
+  }
+  catch(e) {
+    console.log(e)
+  }
+};
+
 export const signup = async (user: any) => {
   try {
     const response = await request.post(`${USERS_API}/signup`, user);
