@@ -37,6 +37,10 @@ const League = () => {
         }
     }, [summonerName]);
 
+    if (!summonerInfo) {
+        return <p>No Summoner Data found. Hop on the rift and play League of Legends today!</p>;
+      }
+
     return (
         <div className="LeagueContainer">
 

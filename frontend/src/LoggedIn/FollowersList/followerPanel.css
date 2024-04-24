@@ -57,3 +57,12 @@
   background-color: #CFA161;
   border-color: #CFA161;
 }
+
+.scrollable-content {
+  scrollbar-width: none;
+  -ms-overflow-style: none; 
+}
+
+.scrollable-content::-webkit-scrollbar {
+  width: 0px;
+}

@@ -154,7 +154,7 @@ const Profile = ({ onRefresh }: ProfileProps) => {
         setShowModal={setShowModal}
         submitAvatar={submitAvatar}
       />
-      <div>
+      <div style={{ marginBottom: '40px' }}>
         <div className="profile-header d-flex justify-content-between">
           <div className="d-flex align-items-center">
             <div
@@ -180,7 +180,7 @@ const Profile = ({ onRefresh }: ProfileProps) => {
             <div className="text-center text-sm-start ms-sm-5 d-flex flex-column">
               <div className="d-flex flex-column">
                 <h1>{username}</h1>
-                <h6 className="text-decoration-underline">{followers.length} followers</h6>
+                <h6>{followers.length} followers</h6>
               </div>
             </div>
           </div>
@@ -236,6 +236,7 @@ const Profile = ({ onRefresh }: ProfileProps) => {
                 rows={7}
                 value={editBioText}
                 onChange={(e) => setEditBioText(e.target.value)}
+                style={{ backgroundColor: 'transparent', color: 'inherit' }}
               ></textarea>
               <div className="ms-auto">
                 <button

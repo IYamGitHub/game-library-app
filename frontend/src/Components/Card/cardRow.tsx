@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Card from './card';
 import League from '../../Games/league';
 import Steam from '../../Games/steam';
+import Valorant from '../../Games/valorant';
 import * as client from '../../Games/client';
 
 interface Game {
@@ -23,8 +24,8 @@ const CardRow = () => {
           res.component = League;
         } else if (res.origin === 'steam') {
           res.component = () => <Steam passedInGame={res.gamename}/>;
-        } else {
-          res.component = undefined;
+        } else if (res.origin === 'valorant') {
+          res.component = Valorant;
         } 
       }
 
